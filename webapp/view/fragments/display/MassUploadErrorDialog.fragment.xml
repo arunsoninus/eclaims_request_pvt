@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="errorDialogId" beforeClose="closeMassErrorDialog" class="sapUiSizeCompact" contentHeight="50em" contentWidth="50em">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Button id="synthesisBackBtnId" icon="sap-icon://nav-back" press="onPressMassSynthNavBack" visible="false"/>
+				</contentLeft>
+			</Bar>
+		</customHeader>
+		<content>
+			<Page title="Mass Synthesis Logs">
+				<content>
+					<MessageView id="massSynthesisMViewId" items="{ErrorMessageModel>/}" showDetailsPageHeader="false" itemSelect="onPressShowSynthesisError">
+						<items>
+							<MessageItem title="{ErrorMessageModel>title}" type="{ErrorMessageModel>type}" description="{ErrorMessageModel>description}"
+								subtitle="{ErrorMessageModel>subtitle}" markupDescription="true"/>
+						</items>
+					</MessageView>
+				</content>
+			</Page>
+		</content>
+		<buttons>
+			<Button press="closeMassErrorDialog" text="Close" type="Default"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,25 @@
+{
+  "name": "claimrequest",
+  "version": "0.0.1",
+  "description": "",
+  "devDependencies": {
+    "@ui5/cli": "1.13.0",
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "@sap/grunt-sapui5-bestpractice-build": "^1.4.1",
+    "@sap/grunt-sapui5-bestpractice-test": "^2.0.1"
+  },
+  "scripts": {
+    "build": "ui5 build --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
+    "test": "grunt unit_and_integration_tests",
+    "generate:mta": "mbt init"
+  },
+  "ui5": {
+    "dependencies": [
+      "@sap/ui5-builder-webide-extension"
+    ]
+  },
+  "private": "true",
+  "main": "Gruntfile.js",
+  "author": "",
+  "license": "ISC"
+}

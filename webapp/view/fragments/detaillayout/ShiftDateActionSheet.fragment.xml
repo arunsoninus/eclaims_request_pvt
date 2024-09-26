@@ -1,0 +1,5 @@
+<ActionSheet id="claimActionSheet" xmlns="sap.m" xmlns:core="sap.ui.core" core:require="{ MessageToast: 'sap/m/MessageToast' }"
+    title="Choose Your Action" showCancelButton="true" placement="Bottom">
+    <Button text="Add" icon="sap-icon://add" press="onRowAdd"/>
+    <Button text="Delete" type="Reject" icon="sap-icon://delete" press="onRowDelete"/>
+</ActionSheet>

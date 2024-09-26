@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core">
+	<!--<l:VerticalLayout width="100%">-->
+	<!--	<l:content>-->
+			<MessagePopover class="customMessagePopover" items="AppModel>/claimRequest/createClaimRequest/massUploadResponseDisplay" id="massUploadErroPopOver"
+				initiallyExpanded="true">
+				<!-- <MessageItem
+            type="Error"
+            title="{AppModel>field}"
+            subtitle="{message>message}"
+            description="TRewerdase"/>-->
+			</MessagePopover>
+	<!--	</l:content>-->
+	<!--</l:VerticalLayout>-->
+</core:FragmentDefinition>

@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:cmmns="sap.ui.commons" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified">
+	<Dialog beforeClose="onAcknowledgedCancel" class="sapUiSizeCompact" contentHeight="20%" contentWidth="50%" title="Confirmation">
+		<content>
+			<HBox>
+				<VBox class="sapUiTinyMargin">
+					<CheckBox selected="{AppModel>/disclaimerConfirmChecked}"/>
+				</VBox>
+				<VBox>
+					<Label class="sapUiSmallMargin" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? true : false}" text="{i18n>Disclaimer.Submit}" design="Bold" wrapping="true" wrappingType="Hyphenated"/>
+					<Label class="sapUiSmallMargin" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? true : false}" text="{i18n>Disclaimer.Submit.CW}" design="Bold" wrapping="true" wrappingType="Hyphenated"/>
+					<Label class="sapUiSmallMargin" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false}" text="{i18n>Disclaimer.Submit.OT}" design="Bold" wrapping="true" wrappingType="Hyphenated"/>
+				</VBox>
+			</HBox>
+		</content>
+		<buttons>
+			<Button text="Submit" enabled="{AppModel>/disclaimerConfirmChecked}" press="onAcknowledgedSubmit" type="Emphasized"/>
+			<Button text="Cancel" press="onAcknowledgedCancel" type="Transparent"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

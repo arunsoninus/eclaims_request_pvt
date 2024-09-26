@@ -1,0 +1,30 @@
+<core:FragmentDefinition controllerName="cross.fnd.fiori.inbox.view.ViewSubstitution" xmlns="sap.m" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout" xmlns:suite="sap.suite.ui.commons" xmlns:u="sap.ui.unified">
+	<Dialog contentWidth="400px" contentHeight="300px" beforeClose="onBeforeCloseDialog" showHeader="false">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" maxContainerCols="3" title="" backgroundDesign="Solid" adjustLabelSpan="true"
+			singleContainerFullSize="false" labelSpanL="4" columnsL="3">
+			<f:content>
+				<core:Title text="{i18n>Billing.Btn.MassUpload}"/>
+				<Label text="{i18n>BillingReq.BD.CCode}"/>
+				<HBox>
+					<Input enabled="false" value="{SynthesisMassRequests>/companyCode}"/>
+					<Text text="{SynthesisMassRequests>/companyName}"/>
+				</HBox>
+				<HBox>
+					<u:FileUploader id="synthesisFileUploader" placeholder="{i18n>BillingReq.Mass.UploadPh}" uploadUrl="" fileType="xls,xlsx"
+						maximumFileSize="1" change="" value="{SynthesisMassRequests>/templateFileName}"/>
+					<Button id="uploadSynthesisId" tooltip="{i18n>BillingReq.Items.Upload}" icon="sap-icon://upload" type="Transparent"
+						press="onPressSynthesisUpload"/>
+				</HBox>
+				<Label text="{i18n>BillingReq.BD.Approver}" required="true"/>
+				<Select showSecondaryValues="true" items="{ path: 'SynthesisMassRequests>/participants/APPROVER' }"
+					selectedKey="{SynthesisMassRequests>/hodApprover}" enabled="{ReadOnlyModel>/isApproverMaintained}">
+					<core:ListItem key="{SynthesisMassRequests>logonId}" text="{SynthesisMassRequests>fullName}"/>
+				</Select>
+			</f:content>
+		</f:SimpleForm>
+		<endButton>
+			<Button text="{i18n>Billing.Btn.Cancel}" icon="sap-icon://decline" press="closeMassUploadRequestsDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

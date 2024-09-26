@@ -1,0 +1,117 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.uxap"
+	xmlns:tnt="sap.tnt">
+	<!--<ScrollContainer height="350px" vertical="true">-->
+	<Table id="idClaimRequestsTable" inset="false" growing="true" growingThreshold="20" growingScrollToLoad="true"
+		sticky="ColumnHeaders,HeaderToolbar"
+		items="{ path: 'EclaimSrvModel>/EclaimRequestViews', sorter: { path: 'DRAFT_ID', descending: true}, parameters:{expand : 'MasterClaimTypeDetails,EclaimsItemDataDetails'},templateShareable:true}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<!--<content>-->
+				<!--<Title text="Claim Requests" level="H3"/>-->
+				<Button text="Pipeline Enabled" />
+				<Button icon="sap-icon://refresh" text="Refresh" tooltip="Refresh" press="onRefreshClaimRequestsNcounts" type="Transparent"/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://create" press="onPressCreateClaimRequest" text="Create Request" type="Transparent" visible="true"/>
+				<!--<Button icon="sap-icon://multiselect-all" press="onPressMassUploadClaimRequests" text="Mass Upload of Claims" type="Transparent"-->
+				<!--	visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>-->
+				<SearchField visible="{= ${AppModel>/showSearchField} ? true : false}"  id="srchFldClaimRequest" placeholder="Search request.." search="onPressSearchClaimRequest" width="20%"/>
+				<Button visible="{= ${AppModel>/showSearchField} ? false : true}" tooltip="Add Filter" icon="sap-icon://filter" press="onPressFilterButton"/>
+							<Button visible="{= ${AppModel>/showSearchField} ? true : false}" tooltip="Remove Filter" icon="sap-icon://clear-filter" press="onPressFilterButton"/>
+				<Button icon="sap-icon://sort" press="onPressSortRequest" type="Transparent" visible="true"/>
+				<Button tooltip="Group" icon="sap-icon://group-2" press="onPressGroupRequest"/>
+				<!--<Button id="filterButton" press="handleFilterButtonPressed" class="sapUiSmallMarginBegin" icon="sap-icon://action-settings"-->
+				<!--	tooltip="Filtering and Sorting" type="Transparent"/>-->
+				<!--</content>-->
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '8rem' : ''}" hAlign="Left" minScreenWidth="Tablet" demandPopin="true"-->
+			<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true"
+				popinDisplay="Inline" mergeDuplicates="false">
+				
+				<Label design="Bold" text="Request #"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '17rem' : ''}" hAlign="Left" minScreenWidth="Tablet" demandPopin="true"-->
+			<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true"
+				popinDisplay="Inline" mergeDuplicates="false">
+				<Label design="Bold" text="Claim Type"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '16rem' : ''}" hAlign="Left" minScreenWidth="Tablet"-->
+			<Column  hAlign="Left" minScreenWidth="Tablet"
+				visible="{= ${AppModel>/userRole} === 'CA' ? true : false }">
+				<Label design="Bold" text="Staff Details"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '21rem' : ''}" hAlign="Left" minScreenWidth="Tablet" demandPopin="true"-->
+			<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true"
+				popinDisplay="Inline" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }">
+				<Label design="Bold" text="ULU / FDLU"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '10rem' : ''}" hAlign="Left" minScreenWidth="Tablet" demandPopin="true"-->
+			<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true"
+				popinDisplay="Inline">
+				<Label design="Bold" text="Period" wrapping="true"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '19rem' : ''}"  hAlign="Left" minScreenWidth="Tablet">-->
+			<Column  hAlign="Left" minScreenWidth="Tablet">
+				<Label design="Bold" text="Status / Locked By"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '18rem' : ''}"  hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">-->
+				<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<Label design="Bold" text="Submitted On / By"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '12rem' : ''}"  hAlign="Left" visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? false : true }" minScreenWidth="Tablet"-->
+			<Column hAlign="Left" visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? false : true }" minScreenWidth="Tablet"
+				demandPopin="true" popinDisplay="Inline">
+				<Label design="Bold" text="Track Request"/>
+			</Column>
+			<!--<Column width="{= ${AppModel>/userRole} === 'CA' ? '12rem' : ''}"  hAlign="Left" visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? true : false }" minScreenWidth="Tablet"-->
+			<Column hAlign="Left" visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? true : false }" minScreenWidth="Tablet"
+				demandPopin="true" popinDisplay="Inline">
+				<Label design="Bold" text="Delete"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Active" press="onPressPreviewClaimRequest">
+				<cells>
+					<!--<ObjectIdentifier title="{= ${EclaimSrvModel>STATUS_CODE} === '01' ? 'Draft' : ${EclaimSrvModel>REQUEST_ID} }"/>-->
+					<!--<Text text="{= ${EclaimSrvModel>STATUS_CODE} === '01' ? 'Draft' : ${EclaimSrvModel>REQUEST_ID} }"/>-->
+					<Text text="{= !${EclaimSrvModel>REQUEST_ID}  ? 'Draft' : ${EclaimSrvModel>REQUEST_ID} }"/>
+					<Text text="{EclaimSrvModel>CLAIM_TYPE_T}"/>
+					<VBox>
+						<Text text="{EclaimSrvModel>FULL_NM}" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>
+						<Text text="({EclaimSrvModel>STAFF_NUSNET_ID})" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>
+					</VBox>
+					<VBox>
+						<Text text="{EclaimSrvModel>ULU_T}" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>
+						<Text text="{EclaimSrvModel>FDLU_T}" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>
+					</VBox>
+					<Text
+						text="{parts:[{path: 'EclaimSrvModel>CLAIM_MONTH'}, {path: 'EclaimSrvModel>CLAIM_YEAR'}], formatter : '.formatter.convertMonthcodeToName'}"/>
+					<VBox>
+					<tnt:InfoLabel text="{EclaimSrvModel>STATUS_ALIAS}" tooltip="{ClaimRequestHistory>statusDisplay}"
+						colorScheme="{EclaimSrvModel>STATUS_COLOR_CODE}" displayOnly="false"/>
+					<HBox>
+					<Text text="{ path: 'EclaimSrvModel>LOCKED_USER_FULL_NM'}"/>	
+					<Button id="idUnlock" icon="sap-icon://unlocked" tooltip="Unlock" press="onPressUnlockRequest" type="Transparent" 
+					
+					visible="{parts:[{path: 'EclaimSrvModel>LOCKED_BY_USER_NID'}, {path: 'AppModel>/loggedInUserStfNumber'}], formatter: '.formatter.visibilityForUnLockButton'}"/>
+					</HBox>
+					</VBox>	
+					<VBox>
+						<Text text="{ path: 'EclaimSrvModel>CREATED_ON', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'd MMM, yyyy HH:mm:ss' } }"/>
+						<Text text="{ path: 'EclaimSrvModel>SUBMITTED_BY_NID'}"/>
+					</VBox>
+					<Button icon="sap-icon://instance" text="Track Request" press="onPressProcessInstance"
+						visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? false : true }"/>
+					
+					<!--<Button icon="sap-icon://delete" text="Delete" press="onPressDeleteClaim"-->
+					<!--	visible="{= ${EclaimSrvModel>REQUEST_STATUS} === '01' ? true : false }"/>-->
+					<Button icon="sap-icon://delete" text="Delete" press="onPressDeleteClaim"
+						visible="{= !${EclaimSrvModel>REQUEST_ID}  ? true : false }"/>					
+					
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	<!--</ScrollContainer>-->
+</core:FragmentDefinition>

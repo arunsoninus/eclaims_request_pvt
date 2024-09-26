@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	class="viewPadding">
+	<Dialog class="sapUiSizeCompact" beforeClose="onBeforCloseCalendarDialog" showHeader="false">
+		<l:VerticalLayout>
+			<l:content>
+				<FlexBox direction="Column">
+					<VBox class="sapUiTinyMargin">
+						<u:Calendar id="dateSelectionCalendarId" select="handleCalendarSelect" showWeekNumbers="true" intervalSelection="false"
+							singleSelection="false"/>
+						<Label text="Start Time"/>
+						<TimePicker width="50%" value="{ClaimRequest>/selectedStartTime}" minutesStep="30" valueFormat="HH:mm" displayFormat="HH:mm"/>
+						<Label text=" End Time"/>
+						<TimePicker width="50%" value=" {ClaimRequest>/selectedEndTime}" minutesStep="30" valueFormat="HH:mm" displayFormat="HH:mm"/>
+						<CheckBox text="Apply to All" selected="{ClaimRequest>/applyToAll}"/>
+					</VBox>
+				</FlexBox>
+			</l:content>
+		</l:VerticalLayout>
+		<buttons>
+			<Button text="Ok" icon="sap-icon://process" press="onPressOkCalendarSelection"/>
+			<Button icon="sap-icon://decline" press="closeCalendarSelectionDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

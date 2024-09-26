@@ -1,0 +1,133 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	class="viewPadding" xmlns:f="sap.ui.layout.form">
+	<TabContainer items="{path: 'ClaimRequest>/datesSelectionList' }" showAddNewButton="true"
+		class="sapUiResponsiveContentPadding sapUiResponsivePadding--header" addNewButtonPress="addNewButtonPressHandler"
+		itemClose="itemCloseHandler">
+		<items>
+			<TabContainerItem name="{ClaimRequest>moduleDesc}" additionalText="{ClaimRequest>department}" iconTooltip="iconTooltip"
+				modified="{modified}">
+				<content>
+					<f:SimpleForm maxContainerCols="2" editable="false" layout="ResponsiveLayout" labelSpanL="4" columnsL="3">
+						<f:content>
+							<core:Title/>
+							<Label text="Department"/>
+							<ExtMultiInput dataPath="/" dialogCodeLbl="deptDesc" dialogDescLbl="NA" dialogTitle="Department Selection" showValueHelp="true"
+								urlAttr="/departmentList" setOnUI="deptDesc" valueHelpOnly="true" valueHelpRequest="lookupValueHelp" value="{RequestData>/department}"
+								sorter="deptDesc"/>
+							<!--	<Label text="Year"/>
+									<Text text="{RequestData>/year}"/>
+									<Label text="Month"/>
+									<Text text="{RequestData>/monthName}"/>-->
+							<Label text="WBS Element"/>
+							<!--<Text text="{RequestData>/wbsElement}"/>-->
+							<ExtMultiInput dataPath="/" dialogCodeLbl="wbsElementCode" dialogDescLbl="wbsElementDesc" dialogTitle="WBS Element Selection"
+								showValueHelp="true" urlAttr="/wbsElementList" setOnUI="wbsElementCode" valueHelpOnly="true" valueHelpRequest="lookupValueHelp"
+								value="{RequestData>/wbsElement}" sorter="wbsElementDesc"/>
+							<core:Title/>
+							<Label text="Rate Type"/>
+							<Select forceSelection="false" selectedKey="{RequestData>/rateType}" items="{ path: 'LocalModel>/rateList' }">
+								<core:Item key="{RequestData>rateCode}" text="{LocalModel>rateCode}"/>
+							</Select>
+							<Label text="Rate/Unit"/>
+							<Input value="{RequestData>/ratePerUnit}"/>
+							<Label text="Total Amount"/>
+							<Input value="{RequestData>/totalAmount}" placeholder="Enter Amount to Claim"/>
+						</f:content>
+					</f:SimpleForm>
+					<!--<f:Form editable="true">
+						<f:layout>
+							<f:ResponsiveGridLayout/>
+						</f:layout>
+						<f:FormContainer>
+							<f:FormElement label="Department">
+								<f:fields>
+									<ExtMultiInput dataPath="/" dialogCodeLbl="deptDesc" dialogDescLbl="NA" dialogTitle="Department Selection" showValueHelp="true"
+										urlAttr="/departmentList" setOnUI="deptDesc" valueHelpOnly="true" valueHelpRequest="lookupValueHelp" value="{RequestData>/department}"
+										sorter="deptDesc"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Module Code">
+								<f:fields>
+									<ExtMultiInput dataPath="/" dialogCodeLbl="moduleDesc" dialogDescLbl="moduleCode" dialogTitle="Module Selection" showValueHelp="true"
+										urlAttr="/moduleList" setOnUI="moduleDesc" valueHelpOnly="true" valueHelpRequest="lookupValueHelp" value="{ClaimRequest>moduleCode}"
+										sorter="moduleDesc"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Module Code">
+								<f:fields>
+									<ExtMultiInput dataPath="/" dialogCodeLbl="moduleDesc" dialogDescLbl="moduleCode" dialogTitle="Module Selection" showValueHelp="true"
+										urlAttr="/moduleList" setOnUI="moduleDesc" valueHelpOnly="true" valueHelpRequest="lookupValueHelp" value="{ClaimRequest>moduleCode}"
+										sorter="moduleDesc"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Last Name">
+								<f:fields>
+									<Text text="{empLastName}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Position">
+								<f:fields>
+									<Text text="{position}"/>
+								</f:fields>
+							</f:FormElement>
+							<f:FormElement label="Salary">
+								<f:fields>
+									<Text text="{salary} EUR"/>
+								</f:fields>
+							</f:FormElement>
+						</f:FormContainer>
+					</f:Form>-->
+				</content>
+			</TabContainerItem>
+		</items>
+	</TabContainer>
+	<!--<l:HorizontalLayout>-->
+	<!--	<u:Calendar id="dateSelectionCalendarId" select="handleCalendarSelect" intervalSelection="false" singleSelection="false"/>-->
+	<!--	minDate="{RequestData>/minSelectedDate}" maxDate="{RequestData>/maxSelectedDate}"/>-->
+	<!--<List id="selectedDatesList" class="labelMarginLeft" noDataText="No Dates Selected" headerText="Selected Dates (dd/MM/yyyy)"
+			items="{path: 'RequestData>/selectedClaimDates'}">
+			<StandardListItem title="{Date}"/>
+		</List>-->
+	<!--<Table id="selectedClaimDatesId" width="50%" inset="false" noDataText="No Dates Selected"
+			items="{ path: 'RequestData>/selectedClaimDates', sorter: { path: 'Name' } }">
+			<headerToolbar>
+				<OverflowToolbar>
+					<content>
+						<Title text="Selected Dates (dd/MM/yyyy)" level="H2"/>
+						<Button press="handleRemoveSelection" tooltip="Reset" type="Ghost" icon="sap-icon://reset"/>
+					</content>
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column>
+					<Text text="Shift Date"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+					<Text text="Day Type"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+					<Text text="Start time"/>
+				</Column>
+				<Column hAlign="Center">
+					<Text text="End time"/>
+				</Column>
+				<Column hAlign="Center">
+					<Text text="Hours"/>
+				</Column>
+				<Column/>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectIdentifier title="{RequestData>shiftDate}" text="{RequestData>shiftDay}"/>
+						<Text text="{RequestData>dayType}"/>
+						<Input value="{RequestData>startTime}" change="onEnterTime"/>
+						<Input value="{RequestData>endTime}" change="onEnterTime"/>
+						<Text text="{RequestData>noOfHours}"/>
+						<Button icon="sap-icon://delete" text="" press="onPressDeleteDate" type="Default"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</l:HorizontalLayout>-->
+</core:FragmentDefinition>

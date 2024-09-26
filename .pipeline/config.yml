@@ -1,0 +1,33 @@
+---
+general:
+  buildTool: "mta"
+service:
+  buildToolVersion: "MBTJ19N18"
+stages:
+  Acceptance:
+    neoDeploy: false
+    npmExecuteEndToEndTests: false
+  Release:
+    tmsExport: false
+    tmsUpload: false
+    neoDeploy: true
+    neo:
+      account: "duxmssmjjx"
+      host: "ap1.hana.ondemand.com"
+      credentialsId: "qasubaccoauth"
+  Build:
+    npmExecuteLint: false
+  Additional Unit Tests:
+    npmExecuteScripts: false
+  Malware Scan:
+    malwareExecuteScan: true
+  Compliance:
+    sonarExecuteScan: false
+steps:
+  neoDeploy:
+    neo:
+      credentialType: "SecretFile"
+  artifactPrepareVersion:
+    versioningType: "cloud_noTag"
+  mtaBuild:
+    applicationName: "sapui5app"

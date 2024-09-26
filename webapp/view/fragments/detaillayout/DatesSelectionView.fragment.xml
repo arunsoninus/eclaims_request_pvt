@@ -1,0 +1,323 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core" xmlns="sap.m" height="100%"
+	xmlns:u="sap.ui.unified">
+	<MessageStrip
+		visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false}"
+		text="{i18n>otClaimInformation}" showIcon="true" showCloseButton="false" class="sapUiTinyMarginBottom"></MessageStrip>
+	<Toolbar>
+		<Title text="Selected Dates"/>
+		<ToolbarSpacer/>
+		<Button text="Validate Claim" icon="sap-icon://validate" press="onPressValidateClaim" type="Transparent"
+			tooltip="Validate the claim details." visible="{AppModel>/visibility/ClaimDetailView/ValidateWBS}"
+			enabled="{= ${AppModel>/isClaimLocked} ? false : true}"/>
+		<Button text="Select Dates" icon="sap-icon://appointment" press="onPressNavigateToSelectDates" type="Transparent"
+			visible="{AppModel>/visibility/ClaimDetailView/SelectDates}" enabled="{= ${AppModel>/isClaimLocked} ? false : true}"/>
+	</Toolbar>
+	<ScrollContainer height="23rem" width="100%" vertical="true" horizontal="true" focusable="false">
+		<Table visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? true : false}" inset="false" growing="true"
+			growingThreshold="20" growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar"
+			items="{ path: 'AppModel>/claimRequest/createClaimRequest/EclaimsItemDataDetails', sorter: { path: 'CLAIM_START_DATE', descending: false},templateShareable:true}">
+			<columns>
+				<Column visible="{= ${AppModel>/enable/ClaimDetailView/ROW_ACTIONS} ? true : false }">
+					<Label text="Add/Del"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/Date} ? true : false}">
+					<Label text="Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/StartDate} ? true : false}">
+					<Label text="Start Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/EndDate} ? true : false}">
+					<Label text="End Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/StartTime} ? true : false}">
+					<Text text="Start Time" wrapping="true"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/EndTime} ? true : false}">
+					<Label text="End Time" wrapping="true"/>
+				</Column>
+				<Column >
+					<Label text="Hours / Unit"/>
+				</Column>
+				<Column >
+					<Label text="Rate Type"/>
+				</Column>
+				<Column visible="{= ${AppModel>/userRole} === 'ESS' ? true : true }">
+					<Text text="Rate Amount" wrapping="true"/>
+				</Column>
+				<!--<Column visible="{= ${AppModel>/userRole} === 'ESS' ? false : true }">-->
+				<Column visible="false">
+					<Text text="Is Discrepancy" wrapping="true"/>
+				</Column>
+				<!--<Column visible="{= ${AppModel>/userRole} === 'ESS' ? false : true }">-->
+				<Column visible="false">
+					<Text text="Amount Discrepancy" wrapping="true"/>
+				</Column>
+				<Column visible="{= ${AppModel>/userRole} === 'ESS' ? true : true }">
+					<Text text="Total Amount" wrapping="true"/>
+				</Column>
+				<Column >
+					<Label text="WBS"/>
+				</Column>
+				<Column >
+					<Label text="Remarks"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<MenuButton enabled="{AppModel>/enable/ClaimDetailView/ROW_ACTIONS}"
+							visible="{= ${AppModel>/enable/ClaimDetailView/ROW_ACTIONS} ? true : false }" text="">
+							<menu>
+								<Menu >
+									<MenuItem text="Add" icon="sap-icon://add" enabled="{AppModel>/enable/ClaimDetailView/ROW_ADD}" press="onRowAdd"/>
+									<MenuItem text="Delete" icon="sap-icon://delete" enabled="{AppModel>/enable/ClaimDetailView/ROW_DELETE}" press="onRowDelete"/>
+								</Menu>
+							</menu>
+						</MenuButton>
+						<VBox visible="{AppModel>/visibility/ClaimDetailView/Date}">
+							<Text text="{AppModel>CLAIM_START_DATE_DISPLAY}"/>
+							<Text text="{AppModel>CLAIM_DAY}"/>
+						</VBox>
+						<VBox>
+							<DatePicker value="{AppModel>CLAIM_START_DATE}" displayFormat="dd MMM,yyyy"
+								valueState="{= !${AppModel>valueStateStartDate} ? 'None' : ${AppModel>valueStateStartDate} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextStartDate} ? '' : ${AppModel>AppModel>valueStateTextStartDate} }"
+								valueFormat="yyyy-MM-dd" change="onChangeStartDateForPeriodItem" enabled="{= ${AppModel>RATE_TYPE} === '11' ? false : true }"
+								minDate="{path: 'AppModel>/claimRequest/createClaimRequest/minDateMonth'}"
+								maxDate="{path: 'AppModel>/claimRequest/createClaimRequest/maxDateMonth'}"
+								visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? true : false}"/>
+							<Text text="{AppModel>CLAIM_START_DATE_DISPLAY}" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? false : true}"/>
+							<!--<Text-->
+							<!--		text="{path: 'AppModel>CLAIM_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: {strictParsing: true , UTC: true, pattern: 'dd.MM.yyyy'}}"-->
+							<!--		wrapping="true" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? false : true}"/>-->
+						</VBox>
+						<VBox>
+							<DatePicker value="{AppModel>CLAIM_END_DATE}" valueFormat="yyyy-MM-dd" change="onChangeEndDateForPeriodItem" displayFormat="dd MMM,yyyy"
+								valueState="{= !${AppModel>valueStateEndDate} ? 'None' : ${AppModel>valueStateEndDate} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextEndDate} ? '' : ${AppModel>AppModel>valueStateTextEndDate} }"
+								enabled="{= ${AppModel>RATE_TYPE} === '11' ? false : true }" minDate="{path: 'AppModel>/claimRequest/createClaimRequest/minDateMonth'}"
+								maxDate="{path: 'AppModel>/claimRequest/createClaimRequest/maxDateMonth'}"
+								visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_END_DATE} ? true : false}"/>
+							<Text text="{path: 'AppModel>CLAIM_END_DATE_DISPLAY'}" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_END_DATE} ? false : true}"/>
+						</VBox>
+						<!--<Input value="{AppModel>CLAIM_START_DATE}"/>-->
+						<!--<Input value="{AppModel>CLAIM_END_DATE}"/>-->
+						<!--<Text text="{AppModel>CLAIM_DAY_TYPE}"/>-->
+						<VBox>
+							<Input type="Text" placeholder="Select Start Time" showValueHelp="true" valueHelpIconSrc="sap-icon://time-account"
+								value="{AppModel>START_TIME}" enabled="{= ${AppModel>RATE_TYPE} === '10' ? true : false }"
+								valueHelpRequest="handleValueHelp1($event,'passed')" liveChange="onChangeofStartTime"
+								valueState="{= !${AppModel>valueStateStartTime} ? 'None' : ${AppModel>valueStateStartTime} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextStartTime} ? '' : ${AppModel>AppModel>valueStateTextStartTime} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? true : false}"/>
+							<Text text="{AppModel>START_TIME}" visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? false : true}"/>
+						</VBox>
+						<VBox>
+							<Input type="Text" width="100%" placeholder="Select End Time" showValueHelp="true" valueHelpIconSrc="sap-icon://time-account"
+								value="{AppModel>END_TIME}" enabled="{= ${AppModel>RATE_TYPE} === '10' ? true : false }"
+								valueHelpRequest="handleValueHelp2($event,'passed')" liveChange="onChangeofEndTime"
+								valueState="{= !${AppModel>valueStateEndTime} ? 'None' : ${AppModel>valueStateEndTime} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextEndTime} ? '' : ${AppModel>AppModel>valueStateTextEndTime} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/END_TIME} ? true : false}"/>
+							<Text text="{AppModel>END_TIME}" visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? false : true}"/>
+						</VBox>
+						<!--<Text text="{AppModel>HOURS}"/>-->
+						<VBox>
+							<Input value="{AppModel>HOURS_UNIT}" liveChange="onChangeofhoursOrUnit"
+								valueState="{= !${AppModel>valueStateHoursOrUnit} ? 'None' : ${AppModel>valueStateHoursOrUnit} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextHoursOrUnit} ? '' : ${AppModel>AppModel>valueStateTextHoursOrUnit} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/HOURS_UNIT} ? true : false}"/>
+							<Text text="{AppModel>HOURS_UNIT}" visible="{= ${AppModel>/enable/ClaimDetailView/HOURS_UNIT} ? false : true}"/>
+						</VBox>
+						<VBox>
+							<Select forceSelection="false" selectedKey="{AppModel>RATE_TYPE}" change="onChangeOfRateType"
+								valueState="{= !${AppModel>valueStateRateType} ? 'None' : ${AppModel>valueStateRateType} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextRateType} ? '' : ${AppModel>AppModel>valueStateTextRateType} }"
+								items="{ path: 'AppModel>RateTypeDetails' }" editable="{= ${AppModel>/enable/ClaimDetailView/RATE_TYPE} ? true : false}">
+								<core:Item key="{AppModel>RateTypeCode}" text="{AppModel>RateTypeDesc}"/>
+							</Select>
+						</VBox>
+						<VBox>
+							<Select forceSelection="false" selectedKey="{AppModel>RATE_TYPE_AMOUNT}" change="onChangeOfRateAmount"
+								valueState="{= !${AppModel>valueStateRateAmount} ? 'None' : ${AppModel>valueStateRateAmount} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextRateAmount} ? '' : ${AppModel>AppModel>valueStateTextRateAmount} }"
+								enabled="{= ${AppModel>IS_DISCREPENCY} ? false : true }" items="{ path: 'AppModel>selectedDayListAmountSet' }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/RATE_TYPE_AMOUNT} ? true : false}">
+								<core:Item key="{AppModel>AMOUNT}" text="{AppModel>AMOUNT}"/>
+							</Select>
+							<Text text="{AppModel>RATE_TYPE_AMOUNT}" visible="{= ${AppModel>/enable/ClaimDetailView/RATE_TYPE_AMOUNT} ? false : true}"/>
+						</VBox>
+						<CheckBox selected="{= ${AppModel>IS_DISCREPENCY} ? true : false}"
+							enabled="{= ${AppModel>/enable/ClaimDetailView/IS_DISCREPENCY} ? true : false}" select="onSelectCheckBoxDiscpInRate"/>
+						<VBox>
+							<Input value="{AppModel>DISC_RATETYPE_AMOUNT}" enabled="{= ${AppModel>IS_DISCREPENCY} ? true : false }"
+								liveChange="onChange($event,'changeOfDiscAmt')"
+								valueState="{= !${AppModel>valueStateDiscAmount} ? 'None' : ${AppModel>valueStateDiscAmount} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextDiscAmount} ? '' : ${AppModel>AppModel>valueStateTextDiscAmount} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/DISC_RATETYPE_AMOUNT} ? true : false}"/>
+							<Text text="{AppModel>DISC_RATETYPE_AMOUNT}" visible="{= ${AppModel>/enable/ClaimDetailView/DISC_RATETYPE_AMOUNT} ? false : true}"/>
+						</VBox>
+						<Text text="{AppModel>TOTAL_AMOUNT}"/>
+						<VBox>
+							<!--<VBOX>-->
+							<Input value="{AppModel>WBS}" liveChange="onChangeofWbs" valueState="{= !${AppModel>valueStateWbs} ? 'None' : ${AppModel>valueStateWbs} }"
+								valueStateText="{= !${AppModel>valueStateTextWbs} ? '' : ${AppModel>valueStateTextWbs} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/WBS} ? true : false}"/>
+							<Text text="{AppModel>WBS}" visible="{= ${AppModel>/enable/ClaimDetailView/WBS} ? false : true}"/>
+							<Text text="{AppModel>WBS_DESC}"/>
+						</VBox>
+						<core:Icon src="sap-icon://comment" class="size4 sapUiSmallMarginBegin" press="onPressIconComment" tooltip="{AppModel>REMARKS}"
+							color="{parts: [ {path:'AppModel>REMARKS'}], formatter: '.formatter.formatCommentColour'}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<Table
+			visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false}"
+			inset="false" growing="true" growingThreshold="20" growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar"
+			items="{ path: 'AppModel>/claimRequest/createClaimRequest/EclaimsItemDataDetails', sorter: { path: 'CLAIM_START_DATE', descending: false},templateShareable:true}">
+			<columns>
+				<Column visible="{= ${AppModel>/enable/ClaimDetailView/ROW_ACTIONS} ? true : false }">
+					<Label text="Add/Del OT"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/Date} ? true : false}">
+					<Label text="Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/StartDate} ? true : false}">
+					<Label text="Start Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/EndDate} ? true : false}">
+					<Label text="End Date"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/StartTime} ? true : false}">
+					<Text text="Start Time" wrapping="true"/>
+				</Column>
+				<Column visible="{= ${AppModel>/visibility/ClaimDetailView/EndTime} ? true : false}">
+					<Label text="End Time" wrapping="true"/>
+				</Column>
+				<Column >
+					<Label text="Hours / Unit"/>
+				</Column>
+				<Column >
+					<Label text="PH"/>
+				</Column>
+				<Column >
+					<Label text="Day Type"/>
+				</Column>
+				<Column>
+					<Text text="Opt for Compensation" tooltip="Opt for Compensation" wrapping="true"/>
+				</Column>
+				<Column >
+					<Label text="WBS"/>
+				</Column>
+				<Column >
+					<Label text="Remarks"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<MenuButton enabled="{AppModel>/enable/ClaimDetailView/ROW_ACTIONS}"
+							visible="{= ${AppModel>/enable/ClaimDetailView/ROW_ACTIONS} ? true : false }" text="">
+							<menu>
+								<Menu >
+									<MenuItem text="Add" icon="sap-icon://add" enabled="{AppModel>/enable/ClaimDetailView/ROW_ADD}" press="onRowAdd"/>
+									<MenuItem text="Delete" icon="sap-icon://delete" enabled="{AppModel>/enable/ClaimDetailView/ROW_DELETE}" press="onRowDelete"/>
+								</Menu>
+							</menu>
+						</MenuButton>
+						<VBox visible="{AppModel>/visibility/ClaimDetailView/Date}">
+							<Text text="{AppModel>CLAIM_START_DATE_DISPLAY}"/>
+							<Text text="{AppModel>CLAIM_DAY}"/>
+						</VBox>
+						<VBox>
+							<DatePicker value="{AppModel>CLAIM_START_DATE}" displayFormat="dd MMM,yyyy"
+								valueState="{= !${AppModel>valueStateStartDate} ? 'None' : ${AppModel>valueStateStartDate} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextStartDate} ? '' : ${AppModel>AppModel>valueStateTextStartDate} }"
+								valueFormat="yyyy-MM-dd" change="onChangeStartDateForPeriodItem" enabled="{= ${AppModel>RATE_TYPE} === '11' ? false : true }"
+								minDate="{path: 'AppModel>/claimRequest/createClaimRequest/minDateMonth'}"
+								maxDate="{path: 'AppModel>/claimRequest/createClaimRequest/maxDateMonth'}"
+								visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? true : false}"/>
+							<Text text="{AppModel>CLAIM_START_DATE_DISPLAY}" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? false : true}"/>
+							<!--<Text-->
+							<!--		text="{path: 'AppModel>CLAIM_START_DATE', type: 'sap.ui.model.type.Date', formatOptions: {strictParsing: true , UTC: true, pattern: 'dd.MM.yyyy'}}"-->
+							<!--		wrapping="true" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_START_DATE} ? false : true}"/>-->
+						</VBox>
+						<VBox>
+							<DatePicker value="{AppModel>CLAIM_END_DATE}" valueFormat="yyyy-MM-dd" change="onChangeEndDateForPeriodItem" displayFormat="dd MMM,yyyy"
+								valueState="{= !${AppModel>valueStateEndDate} ? 'None' : ${AppModel>valueStateEndDate} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextEndDate} ? '' : ${AppModel>AppModel>valueStateTextEndDate} }"
+								enabled="{= ${AppModel>RATE_TYPE} === '11' ? false : true }" minDate="{path: 'AppModel>/claimRequest/createClaimRequest/minDateMonth'}"
+								maxDate="{path: 'AppModel>/claimRequest/createClaimRequest/maxDateMonth'}"
+								visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_END_DATE} ? true : false}"/>
+							<Text text="{path: 'AppModel>CLAIM_END_DATE_DISPLAY'}" visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_END_DATE} ? false : true}"/>
+						</VBox>
+						<!--<Input value="{AppModel>CLAIM_START_DATE}"/>-->
+						<!--<Input value="{AppModel>CLAIM_END_DATE}"/>-->
+						<!--<Text text="{AppModel>CLAIM_DAY_TYPE}"/>-->
+						<VBox>
+							<Input type="Text" placeholder="Select Start Time" showValueHelp="true" valueHelpIconSrc="sap-icon://time-account"
+								value="{AppModel>START_TIME}" enabled="true" valueHelpRequest="handleValueHelp1($event,'passed')" liveChange="onChangeofStartTime"
+								valueState="{= !${AppModel>valueStateStartTime} ? 'None' : ${AppModel>valueStateStartTime} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextStartTime} ? '' : ${AppModel>AppModel>valueStateTextStartTime} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? true : false}"/>
+							<Text text="{AppModel>START_TIME}" visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? false : true}"/>
+						</VBox>
+						<VBox>
+							<Input type="Text" width="100%" placeholder="Select End Time" showValueHelp="true" valueHelpIconSrc="sap-icon://time-account"
+								value="{AppModel>END_TIME}" enabled="true" valueHelpRequest="handleValueHelp2($event,'passed')" liveChange="onChangeofEndTime"
+								valueState="{= !${AppModel>valueStateEndTime} ? 'None' : ${AppModel>valueStateEndTime} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextEndTime} ? '' : ${AppModel>AppModel>valueStateTextEndTime} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/END_TIME} ? true : false}"/>
+							<Text text="{AppModel>END_TIME}" visible="{= ${AppModel>/enable/ClaimDetailView/START_TIME} ? false : true}"/>
+						</VBox>
+						<!--<Text text="{AppModel>HOURS}"/>-->
+						<VBox>
+							<Input value="{AppModel>HOURS_UNIT}" liveChange="onChangeofhoursOrUnit"
+								valueState="{= !${AppModel>valueStateHoursOrUnit} ? 'None' : ${AppModel>valueStateHoursOrUnit} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextHoursOrUnit} ? '' : ${AppModel>AppModel>valueStateTextHoursOrUnit} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/HOURS_UNIT} ? true : false}"/>
+							<Text text="{AppModel>HOURS_UNIT}" visible="{= ${AppModel>/enable/ClaimDetailView/HOURS_UNIT} ? false : true}"/>
+						</VBox>
+						<VBox>
+							<!--<Text text="{AppModel>PH}"/>-->
+							<Text text="{= ${AppModel>IS_PH} === 2 || ${AppModel>IS_PH} === 4 || ${AppModel>IS_PH} === 5 ? 'X' : '' }"/>
+						</VBox>
+						<!--<VBox>-->
+						<!--<VBox visible="{= ${AppModel>IS_PH} === 2 ? true : false}">-->
+						<!--	<Text text="{AppModel>CLAIM_DAY_TYPE}"/>-->
+						<!--</VBox>-->
+						<VBox>
+							<ComboBox selectionChange="onSelectionChangeClaimDayType" selectedKey="{AppModel>CLAIM_DAY_TYPE}"
+								valueState="{= !${AppModel>valueStateClaimDayType} ? 'None' : ${AppModel>valueStateClaimDayType} }"
+								valueStateText="{= !${AppModel>AppModel>valueStateTextClaimDayType} ? '' : ${AppModel>AppModel>valueStateTextClaimDayType} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_DAY_TYPE} ? true : false}" items="{ path: 'AppModel>/dayType' }">
+								<core:Item key="{AppModel>Key}" text="{AppModel>Value}"/>
+								<!--enabled="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? ${AppModel>Key} !== 'Offday' ? true : false : false}"-->
+							</ComboBox>
+							<Text visible="{= ${AppModel>/enable/ClaimDetailView/CLAIM_DAY_TYPE} ? false : true}" text="{AppModel>CLAIM_DAY_TYPE}"/>
+						</VBox>
+						<!--</VBox>-->
+						<VBox>
+							<CheckBox
+								enabled="{= ${AppModel>CLAIM_DAY_TYPE} === 'Offday' &amp;&amp; (${AppModel>IS_PH} === 4 || ${AppModel>IS_PH} === 5 ) &amp;&amp; ${AppModel>/enable/ClaimDetailView/HOURS_UNIT} }"
+								selected="{= ${AppModel>IS_PH} === 5 }" select="onSelectOptForCompensation"/>
+							<!--<Text text="{= ${dayType} === 'Offday' && (${IS_PH} === 2 || ${IS_PH} === 5) ? 'Condition met' : 'Condition not met'}" />-->
+						</VBox>
+						<VBox>
+							<!--<VBOX>-->
+							<Input class="sapUiTinyMarginTop" value="{AppModel>WBS}" liveChange="onChangeofWbs"
+								valueState="{= !${AppModel>valueStateWbs} ? 'None' : ${AppModel>valueStateWbs} }"
+								valueStateText="{= !${AppModel>valueStateTextWbs} ? '' : ${AppModel>valueStateTextWbs} }"
+								visible="{= ${AppModel>/enable/ClaimDetailView/WBS} ? true : false}"/>
+							<Text text="{AppModel>WBS}" visible="{= ${AppModel>/enable/ClaimDetailView/WBS} ? false : true}"/>
+							<Text text="{AppModel>WBS_DESC}"/>
+						</VBox>
+						<core:Icon src="sap-icon://comment" class="size4 sapUiSmallMarginBegin" press="onPressIconComment" tooltip="{AppModel>REMARKS}"
+							color="{parts: [ {path:'AppModel>REMARKS'}], formatter: '.formatter.formatCommentColour'}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</ScrollContainer>
+</core:FragmentDefinition>

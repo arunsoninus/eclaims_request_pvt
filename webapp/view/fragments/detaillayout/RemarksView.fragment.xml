@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+    xmlns:uf="sap.ui.unified" xmlns:tnt="sap.tnt">
+    <l:VerticalLayout width="100%">
+        <l:content>
+            <FeedInput class="sapUiSmallMarginTopBottom" enabled="{= ${AppModel>/enable/ClaimDetailView/HEADER_REMARKS} ? true : false}"
+            	placeholder="{i18n>ClaimRequest.Remarks.PostFeedPh}" maxLength="500" post="onPostComment" value="{AppModel>/claimRequest/HEADER_REMARKS}"
+                showIcon="true" icon="{AppModel>/staffPhoto}"/>
+            <!--<List growing="true" growingThreshold="4" items="{AppModel>/claimRequest/createClaimRequest/REMARKS}" showSeparators="Inner">-->
+            	<List growing="true" growingThreshold="4" showSeparators="Inner"    	items="{ path: 'AppModel>/claimRequest/createClaimRequest/REMARKS', sorter: { path: 'REMARKS_UPDATE_ON', descending: true},templateShareable:true}">
+                <FeedListItem icon="{AppModel>staffPhoto}" showIcon="false" iconDensityAware="false" info="{AppModel>STAFF_USER_TYPE}" sender="{AppModel>STAFF_NAME}"
+                    text="{AppModel>REMARKS}" timestamp="{path:'AppModel>REMARKS_UPDATE_ON'}"/>
+            </List>
+        </l:content>
+    </l:VerticalLayout>
+</core:FragmentDefinition>

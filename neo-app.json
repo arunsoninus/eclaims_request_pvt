@@ -1,0 +1,84 @@
+{
+  "welcomeFile": "/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/tokenauthorize",
+      "target": {
+        "type": "destination",
+        "name": "nusbtpbldest",
+        "entryPath": "/nusbtpbl/tokenauthorize"
+      },
+      "description": "NUS BTP Business Logic Destiantion"
+    },
+    {
+      "path": "/odata",
+      "target": {
+        "type": "destination",
+        "name": "nusbtpbldest",
+        "entryPath": "/nusbtpbl/odata"
+      },
+      "description": "NUS BTP Business Logic Destiantion"
+    },
+    {
+      "path": "/rest",
+      "target": {
+        "type": "destination",
+        "name": "nusbtpbldest",
+        "entryPath": "/nusbtpbl/rest"
+      },
+      "description": "NUS BTP Business Logic Destiantion"
+    },
+    {
+      "path": "/IASUserScim",
+      "target": {
+        "type": "destination",
+        "name": "IDP_USER_SCIM"
+      },
+      "description": "IAS SCIM API"
+    },
+    {
+      "path": "/services/userapi",
+      "target": {
+        "type": "service",
+        "name": "userapi"
+      }
+    }
+  ],
+  "sendWelcomeFileRedirect": true
+}

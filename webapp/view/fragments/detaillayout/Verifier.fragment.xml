@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:tnt="sap.tnt"
+	xmlns:uitable="sap.ui.table">
+	<f:SimpleForm editable="true" layout="ResponsiveGridLayout" maxContainerCols="2" title="" backgroundDesign="Solid" adjustLabelSpan="true"
+		singleContainerFullSize="false">
+		<f:content>
+			<core:Title text="Select Verifier"/>
+			<Label text="Verifier"/>
+			<!--<Input
+				id="inpVerifierValueHelp"
+				type="Text"
+				width="100%"
+				placeholder="Select Verifier"
+				showValueHelp="true"
+				valueHelpIconSrc="sap-icon://value-help"
+				value="{AppModel>/claimRequest/createClaimRequest/VERIFIER_STAFF_FULL_NAME}"
+				editable="{AppModel>/enable/ClaimDetailView/VERIFIER_SRCH_HELP}"
+				valueHelpRequest="handleValueHelpVerifier"/>	-->
+			<MultiInput id="inpVerifierValueHelp" maxTokens="1" type="Text" width="100%" placeholder="Select Verifier" showValueHelp="true"
+				editable="{AppModel>/enable/ClaimDetailView/VERIFIER_SRCH_HELP}" valueHelpRequest="handleValueHelpVerifier" tokenUpdate="onTokenUpdateVerifier">
+				<tokens>
+					
+				</tokens>
+			</MultiInput>
+			<core:Title/>
+		</f:content>
+	</f:SimpleForm>
+</core:FragmentDefinition>

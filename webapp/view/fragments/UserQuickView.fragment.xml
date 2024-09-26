@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<QuickView   navigate=".onNavigate">
+		<QuickViewPage pageId="{AppModel>/employeeInformation/pageId}" header="User Profile of {AppModel>/loggedInUserStfNumber}" title="{AppModel>/employeeInformation/FULL_NM} ({AppModel>/loggedInUserSfStfNumber})" titleUrl=""
+			description="{AppModel>/employeeInformation/WORK_TITLE}" groups="{ path: 'AppModel>/employeeInformation/groups', templateShareable: true }">
+			<avatar>
+				<Avatar src="{AppModel>/staffPhoto}"/>
+			</avatar>
+			<QuickViewGroup heading="Details" elements="{ path: 'AppModel>elements', templateShareable: true }">
+				<QuickViewGroupElement label="{AppModel>label}" value="{AppModel>value}" url="{AppModel>url}" type="{AppModel>elementType}"
+					pageLinkId="{AppModel>pageLinkId}" emailSubject="{AppModel>emailSubject}"/>
+			</QuickViewGroup>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>

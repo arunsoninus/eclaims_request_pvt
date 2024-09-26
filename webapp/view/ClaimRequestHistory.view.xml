@@ -1,0 +1,46 @@
+<mvc:View class="sapUiSizeCompact" controllerName="nus.edu.sg.claimrequest.controller.ClaimRequestHistory" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:a="sap.f" displayBlock="true"
+	xmlns="sap.m">
+	<!--<NavContainer id="claimNav" height="100%" width="100%">-->
+	<Page id="mainScreenPage" showHeader="false" class="sapUiSizeCompact sapUiNoMargin">
+		<!--<headerContent>-->
+		<!--        <Button icon="sap-icon://action" press="onPressCreateClaimRequest" text="Create Claim Request" type="Transparent"-->
+		<!--            visible="true"/>            -->
+		<!--    </headerContent>-->
+		<content>
+			<ObjectHeader class="sapUiSizeCompact" responsive="true" icon="{AppModel>/staffPhoto}" imageShape="Circle"
+				title="{AppModel>/staffInfo/FULL_NM}" iconDensityAware="false" titleActive="false" titlePress="handleTitlePress"
+				showTitleSelector="true" titleSelectorPress="handleQuickViewBtnPress" backgroundDesign="Translucent">
+				<headerContainer>
+					<IconTabBar id="itb1" selectedKey="{AppModel>/iconTabBarSelectedKey}" upperCase="false" select="onSelectIconFilter">
+						<items>
+							<!--<IconTabFilter id="itfTot" showAll="true" count=" " text="Requests" key="All"></IconTabFilter>-->
+							<IconTabFilter id="itfDraft" icon="sap-icon://hint" text="Draft" key="Draft" count=" " tooltip="Draft" iconColor="Marker"></IconTabFilter>
+							<IconTabFilter id="itfPendReq" icon="sap-icon://pending" count="" tooltip="Pending Requests" text="Pending Requests" key="PendReq"
+								iconColor="Critical" visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"></IconTabFilter>
+							<IconTabFilter id="itfReject" icon="sap-icon://employee-rejections" count=" " tooltip="Rejected requests" text="Rejected" key="RejReq"
+								iconColor="Negative"></IconTabFilter>
+							<IconTabFilter id="itfProcess" icon="sap-icon://status-in-process" count=" " tooltip="In Process" text="In Process" key="Process"
+								iconColor="Critical"></IconTabFilter>
+							<IconTabFilter id="itfPost" icon="sap-icon://complete" count="0" tooltip="Posted" text="Completed" key="Post" iconColor="Positive"></IconTabFilter>
+						</items>
+						<content>
+							<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.mainlayout.RequestsTable" type="XML"/>
+						</content>
+					</IconTabBar>
+				</headerContainer>
+			</ObjectHeader>
+		</content>
+		<!--<footer>-->
+		<!--    <OverflowToolbar>-->
+		<!--        <Button icon="sap-icon://multiselect-all" press="onPressMassUploadClaimRequests" text="Mass Upload of Claims" type="Transparent"-->
+		<!--            visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>-->
+		<!--        <Button icon="sap-icon://download" press="onPressDownloadTemplate" tooltip="Download template" type="Transparent"-->
+		<!--            visible="{= ${AppModel>/userRole} === 'CA' ? true : false }"/>-->
+		<!--        <ToolbarSpacer/>-->
+		<!--        <Button icon="sap-icon://action" press="onPressCreateClaimRequest" text="Create Claim Request" type="Transparent"-->
+		<!--            visible="{ReadOnlyModel>/isSingleSubmission}"/>-->
+		<!--    </OverflowToolbar>-->
+		<!--</footer>-->
+	</Page>
+</mvc:View>

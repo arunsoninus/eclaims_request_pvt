@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<TableSelectDialog noDataText="No Data Found" title="Select Staff" search=".handleSearchStaff" confirm=".handleConfirmStaff"
+		cancel=".handleCloseStaff" items="{ path : 'AppModel>/claimRequest/staffList', sorter : { path : 'NUSNET_ID', descending : true } }">
+		<ColumnListItem vAlign="Middle">
+			<cells>
+				<ObjectIdentifier title="{AppModel>FULL_NM}" text="{AppModel>STF_NUMBER}"/>
+				<Text text="{AppModel>NUSNET_ID}"/>
+				<ObjectIdentifier title="{AppModel>ULU_T}" text="{AppModel>ULU_C}"/>
+				<ObjectIdentifier title="{AppModel>FDLU_T}" text="{AppModel>FDLU_C}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column >
+				<header>
+					<Text text="Staff ID / Full Name"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<header>
+					<Text text="Nusnet ID"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<header>
+					<Text text="ULU"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<header>
+					<Text text="FDLU"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+</core:FragmentDefinition>

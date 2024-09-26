@@ -1,0 +1,15 @@
+_schema-version: 3.1
+ID: claimrequest
+version: 1.0.384
+description: "Eclaims Request Application"
+parameters:
+  hcp-deployer-version: "1.1.0"	
+modules:
+  - name: claimrequest
+    type: com.sap.hcp.html5
+    path: .
+    parameters:
+      version: 1.0.384
+      memory : 256M
+    build-parameters:
+       ignore: ["piper"]

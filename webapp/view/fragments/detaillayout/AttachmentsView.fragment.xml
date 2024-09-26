@@ -1,0 +1,40 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:uf="sap.ui.unified" xmlns:upload="sap.m.upload">
+	<l:VerticalLayout width="100%">
+		<l:content>
+			<List headerText="Attachments" items="{ path: 'AppModel>/claimRequest/createClaimRequest/attachmentList/results' }">
+				<StandardListItem title="{AppModel>ATTACHMENT_NAME}"/>
+			</List>
+			<Title class="h2Title" text="{i18n>ClaimRequest.Attachments.Upload}"/>
+			<Button text="Submit" press="onUploadDocument" type="Emphasized"/>
+			<FormattedText
+				htmlText="{i18n>ClaimRequest.Attachments.InfoList1}{i18n>ClaimRequest.Attachments.InfoList2}{i18n>ClaimRequest.Attachments.InfoList3}{i18n>ClaimRequest.Attachments.InfoList4}"/>
+			<upload:UploadSet multiple="false" id="UploadSet" instantUpload="false"
+				uploadEnabled="{= ${AppModel>/enable/ClaimDetailView/ATTACHMENT_UPLOAD} ? ${AppModel>/isClaimLocked} ? false : true : false }"
+				terminationEnabled="false" fileTypes="{i18n>ClaimRequest.Attachments.AllowedExtensions}" maxFileNameLength="50" maxFileSize="5"
+				mediaTypes="{i18n>ClaimRequest.Attachments.MediaT}" sameFilenameAllowed="false" uploadButtonInvisible="false"
+				items="{path: '{AppModel>/claimRequest/createClaimRequest/attachmentList/results}', templateShareable: false}" width="80%"
+				fileTypeMismatch="handleFileTypeMismatch">
+				<upload:toolbar>
+					<OverflowToolbar>
+						<Button icon="sap-icon://download" text="Download selected" press="onDownloadSelectedButton"/>
+					</OverflowToolbar>
+				</upload:toolbar>
+				<upload:items>
+					<upload:UploadSetItem fileName="{AppModel>ATTACHMENT_NAME}" uploadState="Complete" removePressed="onPressRemoveAttachment"
+						visibleEdit="false" enabledEdit="false">
+						<!--	<upload:attributes>
+							<ObjectAttribute title="{AppModel>ATTACHMENT_NAME}" text="{AppModel>ATTACHMENT_NAME}" active="true"/>
+						</upload:attributes>-->
+						<!--<upload:markers>
+							<ObjectMarker type="{AppModel>type}" visibility="{visibility}"/>
+						</upload:markers>-->
+						<!--<upload:statuses>
+							<ObjectStatus title="{AppModel>ATTACHMENT_NAME}" text="{AppModel>ATTACHMENT_NAME}" state="Success" active="true"/>
+						</upload:statuses>-->
+					</upload:UploadSetItem>
+				</upload:items>
+			</upload:UploadSet>
+		</l:content>
+	</l:VerticalLayout>
+</core:FragmentDefinition>

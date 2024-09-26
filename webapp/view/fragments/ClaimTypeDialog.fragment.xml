@@ -1,0 +1,77 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout"
+	xmlns:suite="sap.suite.ui.commons" xmlns:u="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar">
+	<Dialog class="sapUiSizeCompact" afterClose="closeClaimTypeDialog" showHeader="false">
+		<layout:VerticalLayout>
+			<layout:content>
+				<f:SimpleForm editable="true" layout="ResponsiveGridLayout" maxContainerCols="2" title="" backgroundDesign="Solid" adjustLabelSpan="true"
+					singleContainerFullSize="false" labelSpanL="4" columnsL="3">
+					<f:content>
+						<core:Title text="Create New Claim" class="sapUiNoMargin"/>
+						<Label text="Claim Type" required="{AppModel>/requiredUiControl/ClaimTypeDialog/claimType}"/>
+						<Input type="Text" width="100%" placeholder="Select Claims Type.."
+							value="{AppModel>/claimRequest/createClaimRequest/claimTypeList/0/CLAIM_TYPE_T}" showValueHelp="true"
+							valueHelpIconSrc="sap-icon://value-help" valueHelpRequest="handleValueHelpClaimType" editable="true"/>
+						<Label text="Select Month" required="{AppModel>/requiredUiControl/ClaimTypeDialog/selectMonth}"
+							visible="{= ${ReadOnlyModel>/isCA} &amp;&amp; !${ReadOnlyModel>/isMassUploadFeatureVisible}}"/>
+						<Select forceSelection="false" selectedKey="{AppModel>/claimRequest/createClaimRequest/month}"
+							items="{ path: 'AppModel>/claimRequest/monthList' }" change="onSelectMonth"
+							visible="{= ${ReadOnlyModel>/isCA} &amp;&amp; !${AppModel>/claimRequest/isMassUploadFeatureVisible}}">
+							<core:Item key="{AppModel>monthCode}" text="{AppModel>monthName}"/>
+						</Select>
+						<Link text="Select ULU and FDLU" press="onPressSelectUluAndFdlu"/>
+						<Label text="ULU" required="{AppModel>/requiredUiControl/ClaimTypeDialog/ulu}"/>
+						<Input type="Text" width="100%" placeholder="Enter ULU"
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/uluSelected} ? true : true }"
+							value="{AppModel>/claimRequest/createClaimRequest/uluSelected}" valueHelpRequest="handleValueHelpUluFdlu" editable="false"/>
+						<Label text="FDLU" required="{AppModel>/requiredUiControl/ClaimTypeDialog/fdlu}"/>
+						<Input type="Text" width="100%" placeholder="Enter FDLU"
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/uluSelected} ? true : true }"
+							value="{AppModel>/claimRequest/createClaimRequest/fdluSelected}" valueHelpRequest="handleValueHelpUluFdlu" editable="false"/>
+						<!--<Label text="Select ULU / FDLU" />				-->
+						<!--<Link text="Select ULU and FDLU" press="onPressSelectUluAndFdlu"/>-->
+						<!--<RadioButtonGroup   select="onChangeMassUploadSingleSubRadioButton" class="sapUiMediumMarginBottom" >-->
+						<HBox>
+							<RadioButton text="Mass Upload" selected="{AppModel>/claimRequest/massUploadRadioSelected}"
+								visible="{= ${AppModel>/userRole} === 'CA' ? true: false}"/>
+							<RadioButton text="Single Submission" selected="{AppModel>/claimRequest/SingleSubRadioSelected}"
+								visible="{= ${AppModel>/userRole} === 'CA' ? true: false}"/>
+						</HBox>
+						<!--</RadioButtonGroup>-->
+						<Label text="Staff" required="{AppModel>/claimRequest/SingleSubRadioSelected}"
+							visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/massUploadRadioSelected} === false ? true: false : false}"/>
+						<Input type="Text" width="100%" placeholder="Select Staff.." value="{AppModel>/claimRequest/createClaimRequest/staffList/0/STAFF_FULL_NAME}"
+							showValueHelp="true" valueHelpIconSrc="sap-icon://value-help" valueHelpRequest="handleValueHelpStaff" editable="true"
+							visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/massUploadRadioSelected} === false ? true: false : false}"/>
+						<Label text="Claim Request Type" required="{AppModel>/claimRequest/SingleSubRadioSelected}"
+							visible="{parts: [ {path:'AppModel>/userRole'}, {path:'AppModel>/claimRequest/massUploadRadioSelected'}, {path:'AppModel>/claimRequest/createClaimRequest/claimTypeList/0/CLAIM_TYPE_C'} ], formatter: '.formatter.visibilityForClaimRequestType'}"/>
+						<Select forceSelection="false" selectedKey="{AppModel>/claimRequest/createClaimRequest/claimRequestType}"
+							items="{ path: 'AppModel>/claimRequest/claimRequestTypeList' }" change="onSelectclaimRequestType"
+							visible="{parts: [ {path:'AppModel>/userRole'}, {path:'AppModel>/claimRequest/massUploadRadioSelected'}, {path:'AppModel>/claimRequest/createClaimRequest/claimTypeList/0/CLAIM_TYPE_C'} ], formatter: '.formatter.visibilityForClaimRequestType'}">
+							<core:Item key="{AppModel>claimRequestTypeCode}" text="{AppModel>claimRequestTypeName}"/>
+						</Select>
+						<Label text="Header Rows Count"
+							visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/massUploadRadioSelected} === true ? true: false : false}"/>
+						<Input type="Number" placeholder="Enter number of rows used as header in excel.."
+							value="{AppModel>/claimRequest/createClaimRequest/noOfHeaderRows}"
+							visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/massUploadRadioSelected} === true ? true: false : false}"/>
+						<Label/>
+						<HBox>
+							<u:FileUploader id="massClaimsUploadId" placeholder="Upload Mass Claims" uploadUrl="" fileType="xls,xlsx" maximumFileSize="1"
+								value="{ClaimRequest>/massUploadFile}"
+								visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/massUploadRadioSelected} === true ? true: false : false}"/>
+						</HBox>
+					</f:content>
+				</f:SimpleForm>
+				<MessageStrip id="claimTypeMessageStripId"></MessageStrip>
+				<Label/>
+			</layout:content>
+		</layout:VerticalLayout>
+		<buttons>
+			<Button text="Proceed" icon="sap-icon://process" press="onPressProceedToCreate"
+				visible="{= ${AppModel>/userRole} === 'CA' ? ${AppModel>/claimRequest/SingleSubRadioSelected} === true ? true: false : true}"/>
+			<Button text="{i18n>ClaimRequest.Items.Upload}" icon="sap-icon://upload" press="onPressMassUploadTemplate"
+				visible="{=${AppModel>/claimRequest/massUploadRadioSelected} === true ? true: false}"/>
+			<Button icon="sap-icon://decline" press="closeClaimTypeDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

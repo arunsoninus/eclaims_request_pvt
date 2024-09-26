@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<TableSelectDialog noDataText="No Data Found" title="Select Additional Approver" search=".handleSearchAdditionalApprover2" confirm=".handleConfirmApprover2"
+		cancel=".handleCloseApprover2" items="{ path : 'AppModel>/AdditionalApprover2', sorter : { path : 'NUSNET_ID', descending : true } }">
+		<ColumnListItem vAlign="Middle">
+			<cells>
+				<ObjectIdentifier title="{AppModel>STF_NUMBER}" text="{AppModel>FULL_NM}"/>
+				<Text text="{AppModel>NUSNET_ID}"/>
+				<ObjectIdentifier title="{AppModel>ULU_C}" text="{AppModel>ULU_T}"/>
+				<ObjectIdentifier title="{AppModel>FDLU_C}" text="{AppModel>FDLU_T}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column >
+				<header>
+					<Text text="Staff ID / Full Name"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Tablet" demandPopin="true">
+				<header>
+					<Text text="Nusnet ID"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<header>
+					<Text text="ULU"/>
+				</header>
+			</Column>
+			<Column minScreenWidth="Desktop" demandPopin="true">
+				<header>
+					<Text text="FDLU"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
+</core:FragmentDefinition>

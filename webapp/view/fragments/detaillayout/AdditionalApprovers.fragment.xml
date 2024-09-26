@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:tnt="sap.tnt"
+	xmlns:uitable="sap.ui.table">
+	<f:SimpleForm editable="true" layout="ResponsiveGridLayout" maxContainerCols="2" title="" backgroundDesign="Solid" adjustLabelSpan="true"
+		singleContainerFullSize="false">
+		<f:content>
+			<core:Title text="Select Additional Approvers"/>
+			<Label text="Additional Approver 1"/>
+			<MultiInput id="inpAddApprv1ValueHelp" type="Text" width="100%" placeholder="Select Additional Approver" showValueHelp="true"
+				editable="{= ${AppModel>/enable/ClaimDetailView/ADD_1_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"
+				valueHelpRequest="handleValueHelpAdditionalApprover($event,'ADD_APPROVER_1')" tokenUpdate="onTokenUpdateAddApp1">
+				<tokens></tokens>
+			</MultiInput>
+			<!--<Link visible="{AppModel>/showAdditionalApproverLink}" text="Add Second Approver"-->
+			<!--	enabled="{= ${AppModel>/enable/ClaimDetailView/ADD_1_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"-->
+			<!--	press="onPressAddAdditionalApprover"/>-->
+			<Link visible="{AppModel>/showAdditionalApproverLink}" text="Add Additional Approver"
+				enabled="{= ${AppModel>/enable/ClaimDetailView/ADD_1_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"
+				press="onPressAddAdditionalApprover"/>			
+			<Label text="Additional Approver 2" visible="{AppModel>/showAdditonalApprover2}"/>
+			<MultiInput id="inpAddApprv2ValueHelp" visible="{AppModel>/showAdditonalApprover2}" type="Text" width="100%"
+				placeholder="Select 2nd Additional Approver" showValueHelp="true"
+				editable="{= ${AppModel>/enable/ClaimDetailView/ADD_2_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"
+				valueHelpRequest="handleValueHelpAdditionalApprover2($event,'ADD_APPROVER_2')" tokenUpdate="onTokenUpdateAddApp2">
+				<tokens></tokens>
+			</MultiInput>
+			<!--<Button type="Emphasized" press="onPressRemoveAdditionalApprover" icon="sap-icon://sys-cancel"/>-->
+			<!--<Link visible="{AppModel>/showRemoveAdditionalApproverLink}" text="Remove Second Approver"-->
+			<!--	enabled="{= ${AppModel>/enable/ClaimDetailView/ADD_2_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"-->
+			<!--	press="onPressRemoveAdditionalApprover"/>-->
+			<Link visible="{AppModel>/showRemoveAdditionalApproverLink}" text="Remove Additional Approver"
+				enabled="{= ${AppModel>/enable/ClaimDetailView/ADD_2_SRCH_HELP} ? ${AppModel>/isClaimLocked} ? false : true : false}"
+				press="onPressRemoveAdditionalApprover"/>			
+			<core:Title/>
+		</f:content>
+	</f:SimpleForm>
+</core:FragmentDefinition>

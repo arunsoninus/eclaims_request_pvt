@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleConfirm"  sortDescending="true" title="View Settings"
+		sortItems="{AppModel>/sortingLookupData}" groupItems="{AppModel>/groupLookupData}">
+		<sortItems>
+			<ViewSettingsItem selected="{AppModel>selectedStatus}" text="{AppModel>text}" key="{AppModel>key}"/>
+		</sortItems>
+		<groupItems>
+			<ViewSettingsItem selected="{AppModel>selectedStatus}" text="{AppModel>text}" key="{AppModel>key}"/>
+		</groupItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

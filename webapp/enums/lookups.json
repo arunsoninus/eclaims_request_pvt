@@ -1,0 +1,270 @@
+{
+	"claimsList": [{
+		"claimDesc": "Over-time"
+	}, {
+		"claimDesc": "Honorarium"
+	}, {
+		"claimDesc": "Night Duty Allowance"
+	}, {
+		"claimDesc": "Library Night Duty Allowance"
+	}, {
+		"claimDesc": "Stand - by Duty Allowance"
+	}, {
+		"claimDesc": "Driving Allowance"
+	}, {
+		"claimDesc": "Contingent Workforce"
+	}, {
+		"claimDesc": "Part Time Teaching"
+	}],
+	"staffList": [{
+		"userId": "",
+		"userName": ""
+	}, {
+		"staffId": "53428",
+		"staffName": "Damion Pope",
+		"ulu": "0310039300",
+		"uluDesc": "University Scholars Programme",
+		"fdlu": "0003930001",
+		"fdluName": "Dean's Office (USP)",
+		"doj": "3rd February, 2019",
+		"employeeGroup": "Casual"
+	}, {
+		"staffId": "1980",
+		"staffName": "Anasofia Henleigh",
+		"ulu": "0100006200",
+		"uluDesc": "Centre for Instructional Technology",
+		"fdlu": "0000620007",
+		"fdluName": "ITSS",
+		"doj": "10th April, 2017",
+		"employeeGroup": "Permanent"
+	}],
+	"additionalApproverList": [{
+		"userId": "",
+		"userName": ""
+	}, {
+		"userId": "11111",
+		"userName": "Kee Siok San Sue"
+	}, {
+		"userId": "102131",
+		"userName": "Amit Kumar"
+	}, {
+		"userId": "12042",
+		"userName": "Leong Yuet"
+	}, {
+		"userId": "1434343",
+		"userName": "Amarnath Chandramouliswaran"
+	}, {
+		"userId": "102323",
+		"userName": "Arun Soni"
+	}],
+	"moduleList": [{
+		"moduleCode": "010001",
+		"moduleDesc": "Test Module 1"
+	}, {
+		"moduleCode": "010002",
+		"moduleDesc": "Test Module 2"
+	}],
+	"wbsElementList": [{
+		"wbsElementCode": "C051000244101",
+		"wbsElementDesc": "Comp Center Test 1"
+	}, {
+		"wbsElementCode": "C051000244103",
+		"wbsElementDesc": "Comp Center Test 2"
+	}],
+	"departmentList": [{
+		"deptDesc": "COMP CENTRE",
+		"wbsElement": "C051000244101"
+	}, {
+		"deptDesc": "CHINESE STUD",
+		"wbsElement": "C051000244103"
+	}],
+	"monthList": [{
+		"monthCode": "",
+		"monthName": ""
+	}, {
+		"monthCode": "2022-02",
+		"monthName": "February,2022"
+	}, {
+		"monthCode": "2022-01",
+		"monthName": "January,2022"
+	}, {
+		"monthCode": "2021-12",
+		"monthName": "December,2021"
+	}],
+	"viewList": [{
+		"viewCode": "W",
+		"viewName": "Weekly"
+	}, {
+		"viewCode": "M",
+		"viewName": "Monthly"
+	}, {
+		"viewCode": "MOD",
+		"viewName": "Module-Wise"
+	}, {
+		"viewCode": "DEPT",
+		"viewName": "Department-Wise"
+	}],
+	"rateList": [{
+		"rateCode": ""
+	}, {
+		"rateCode": "HOURLY",
+		"rateDesc": "Hourly"
+	}, {
+		"rateCode": "MONTHLY",
+		"rateDesc": "Monthly"
+	}, {
+		"rateCode": "SCRIPTS",
+		"rateDesc": "Number of Scripts"
+	}],
+	"rateUnitList": [{
+		"rateUnit": "80"
+	}, {
+		"rateUnit": "100"
+	}, {
+		"rateUnit": "120"
+	}],
+	"yearList": [{
+		"yearValue": "2020"
+	}, {
+		"yearValue": "2021"
+	}],
+	"monthNames": ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	],
+	"days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+	"messagedata": [{
+		"type": "Information",
+		"title": "Screen Info",
+		"message": "Submit a Billing Request form"
+	}],
+	"calendarProperties": {
+		"daysToDisable": [0, 6],
+		"specialDays": [],
+		"selectedDate": {
+			"value": "",
+			"selectedType": "",
+			"message": "",
+			"isVisible": false,
+			"isUrgent": false
+		},
+		"dateRangeTypes": {
+			"WithinFiveDays": "Type01",
+			"NoSelection": "Type03",
+			"AppntWindow": "Type07",
+			"PublicHoliday": "Type08",
+			"PastNWeekend": "Type10",
+			"None": "None"
+		},
+		"standardLegendItems": ["Today", "Selected", "WorkingDay", "NonWorkingDay"],
+		"legendItems": [{
+			"legendName": "No selection Allowed",
+			"legendType": "Type03"
+		}],
+		"months": {
+			"JANUARY": "01",
+			"FEBRUARY": "02",
+			"MARCH": "03",
+			"APRIL": "04",
+			"MAY": "05",
+			"JUNE": "06",
+			"JULY": "07",
+			"AUGUST": "08",
+			"SEPTEMBER": "09",
+			"OCTOBER": "10",
+			"NOVEMBER": "11",
+			"DECEMBER": "12"
+		}
+	},
+	"psLocal": [{
+		"Code": "",
+		"Description": ""
+	}, {
+		"Code": "L",
+		"Description": "Local"
+	}, {
+		"Code": "E",
+		"Description": "Export"
+	}],
+	"taxCurrencyMap": {
+		"GST": "SGD",
+		"VAT": "EUR"
+	},
+	"wbsSuggestionList": [{
+		"pageId": "companyPageId",
+		"header": "WBS info",
+		"title": "Suggestion",
+		"titleUrl": "http://sap.com",
+		"icon": "sap-icon://building",
+		"displayShape": "Square",
+		"description": "John Doe",
+		"groups": [{
+			"heading": "Contact Details",
+			"elements": [{
+				"label": "Phone",
+				"value": "+001 6101 34869-0",
+				"elementType": "phone"
+			}, {
+				"label": "Address",
+				"value": "550 Larkin Street, 4F, Mountain View, CA, 94102 San Francisco USA",
+				"elementType": "text"
+			}]
+		}, {
+			"heading": "Main Contact",
+			"elements": [{
+				"label": "Name",
+				"value": "John Doe",
+				"elementType": "pageLink",
+				"pageLinkId": "companyEmployeePageId"
+			}, {
+				"label": "Mobile",
+				"value": "+001 6101 34869-0",
+				"elementType": "mobile"
+			}, {
+				"label": "Phone",
+				"value": "+001 6101 34869-0",
+				"elementType": "phone"
+			}, {
+				"label": "Email",
+				"value": "main.contact@company.com",
+				"emailSubject": "Subject",
+				"elementType": "email"
+			}]
+		}]
+	}, {
+		"pageId": "companyEmployeePageId",
+		"header": "Employee Info",
+		"title": "John Doe",
+		"icon": "sap-icon://person-placeholder",
+		"displayShape": "Circle",
+		"description": "Department Manager",
+		"groups": [{
+			"heading": "Company",
+			"elements": [{
+				"label": "Name",
+				"value": "Adventure Company",
+				"url": "http://sap.com",
+				"elementType": "link"
+			}, {
+				"label": "Address",
+				"value": "Sofia, Boris III, 136A"
+			}, {
+				"label": "Slogan",
+				"value": "Innovation through technology"
+			}]
+		}, {
+			"heading": "Other",
+			"elements": [{
+				"label": "Email",
+				"value": "john.doe@sap.com",
+				"emailSubject": "Subject",
+				"elementType": "email"
+			}, {
+				"label": "Phone",
+				"value": "+359 888 888 888",
+				"elementType": "mobile"
+			}]
+		}]
+	}]
+
+}

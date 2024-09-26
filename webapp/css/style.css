@@ -1,0 +1,99 @@
+/* Enter your custom styles here */
+.size3 {
+    font-size: 1rem;
+}
+
+.customMessagePopover .sapMPopoverCont {
+  /* Adjust the width to your desired value */
+  width: 50rem!important;
+}
+.removeBorderButton span.sapMBtnInner.sapMBtnReject {
+    border: none !important;
+    background-image: none;
+    background-color: #fff;
+    color: #b00;
+}
+
+.sapSuiteUiCommonsProcessFlowNode3ZoomLevel3 {
+    clear: both;
+    float: left;
+    display: block;
+    position: relative;
+    margin: 0rem;
+    /*padding: 0rem !important;*/
+    width: 8.5rem;
+    min-width: 6.5rem;
+    max-width: 10.5rem;
+    overflow: hidden;
+}
+
+.sapSuiteUiCommonsProcessFlowNode3ZoomLevel2 {
+    clear: both;
+    float: left;
+    display: block;
+    position: relative;
+    margin: 0rem;
+    /*padding: 0rem !important;*/
+    width: 9rem;
+    min-width: 9rem;
+    max-width: 9rem;
+    overflow: hidden;
+}
+
+.provideFullWidthRemarks .sapUiHLayoutChildWrapper {
+    white-space: normal;
+    /*display: block!important;*/
+    vertical-align: top;
+}
+
+
+.navigationExamples .code {
+    margin: 0 5%;
+    font-family: Consolas, Courier, monospace;
+}
+
+.navigationExamples .ne-flexbox1,
+.navigationExamples .ne-flexbox2 {
+    padding: 0;
+}
+
+.navigationExamples .ne-flexbox1 li {
+    margin: 0.4em;
+    padding: 0.4em 1.3em;
+    list-style-type: none;
+    text-align: center;
+    background-color: #193441;
+    cursor: pointer;
+}
+
+.navigationExamples .ne-flexbox1 li:hover {
+    background-color: orange;
+}
+
+.navigationExamples .ne-flexbox2 li {
+    margin: 0.5em;
+    width: 25%;
+    min-width: 15%;
+    list-style-type: none;
+    text-align: center;
+    background-color: #193441;
+    padding: 0.4em;
+    transition: width 0.5s ease-out, background-color 0.5s ease-out, flex-basis 0.5s ease-out;
+    cursor: pointer;
+}
+
+.navigationExamples .ne-flexbox2 li:hover {
+    flex-basis: 35% !important;
+    background-color: orange;
+}
+
+.navigationExamples .ne-flexbox1 li a,
+.navigationExamples .ne-flexbox2 li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.processFlowNodeText {
+    font-size: 0.5rem !important
+}

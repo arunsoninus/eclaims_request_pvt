@@ -1,0 +1,229 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" height="100%" xmlns:u="sap.ui.unified"
+	xmlns:table="sap.ui.table">
+	<Dialog showHeader="false">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title text="Mass Upload Response"/>
+				</contentLeft>
+				<contentRight>
+					<Button text="Export" icon="sap-icon://excel-attachment" press="onExportMassUploadResponse"/>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<MessageStrip text="Please note : Records without error icon will be only submitted." type="Information" showIcon="true"
+			class="sapUiTinyMarginBeginEnd"></MessageStrip>
+		<content>
+			<ScrollContainer height="auto" width="100%" vertical="true" horizontal="true" focusable="false">
+				<VBox visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? true : false}">
+					<Table inset="false" growing="true" growingThreshold="20" growingScrollToLoad="true" sticky="ColumnHeaders,HeaderToolbar"
+						items="{ path: 'AppModel>/claimRequest/createClaimRequest/massUploadResponseDisplay', templateShareable:true}">
+						<columns>
+							<Column width="5rem">
+								<Label design="Bold" text="Errors"/>
+							</Column>
+							<Column width="5rem">
+								<Label design="Bold" text="Staff ID"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="Claim Req. Type" wrapping="true"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="Start Date"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="End Date"/>
+							</Column>
+							<!--	<Column width="6rem">
+							<Text text="Start Time"/>
+						</Column>
+						<Column width="6rem">
+							<Label design="Bold"  text="End Time"/>
+						</Column>-->
+							<Column width="7rem">
+								<Label design="Bold" text="Hours / Unit" wrapping="true"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="Rate Type" wrapping="true"/>
+							</Column>
+							<Column width="6rem">
+								<Label design="Bold" text="Rate Amount" wrapping="true"/>
+							</Column>
+							<!--<Column width="7rem">-->
+							<!--	<Label design="Bold" text="Discrepancy" visible="false" wrapping="true"/>-->
+							<!--</Column>-->
+							<Column width="8rem">
+								<Label design="Bold" text="Verifier" wrapping="true"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="Additional Approver 1" wrapping="true"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="Additional Approver 2" wrapping="true"/>
+							</Column>
+							<Column width="8rem">
+								<Label design="Bold" text="WBS"/>
+							</Column>
+							<Column width="10rem">
+								<Label design="Bold" text="Attachment Required" wrapping="true"/>
+							</Column>
+							<Column width="7rem">
+								<Label design="Bold" text="Remarks"/>
+							</Column>
+							<!--<Column width="7rem">
+							<Label design="Bold" text="Error Messages"/>
+						</Column>-->
+						</columns>
+						<items>
+							<ColumnListItem >
+								<cells>
+									<Button class="removeBorderButton sapUiNoContentPadding" icon="sap-icon://alert" text="{= ${AppModel>validationResults/}.length }"
+										visible="{= ${AppModel>validationResults/}.length > 0 }" type="Reject" press="onMessagePopoverPress"/>
+									<Text text="{AppModel>STF_NUMBER}"/>
+									<Text text="{AppModel>CLAIM_REQUEST_TYPE}"/>
+									<Text text="{AppModel>CLAIM_START_DATE}"/>
+									<Text text="{AppModel>CLAIM_END_DATE}"/>
+									<Text text="{AppModel>HOURS_UNIT}"/>
+									<Text text="{AppModel>RATE_TYPE}"/>
+									<Text text="{AppModel>RATE_TYPE_AMOUNT}"/>
+									<!--<CheckBox enabled="false" visible="false" selected="{= ${AppModel>IS_DISCREPENCY} ? true : false}"/>-->
+									<ObjectIdentifier title="{AppModel>VERIFIER_STAFF_FULL_NAME}" text="{AppModel>VERIFIER_STAFF_ID}"/>
+									<ObjectIdentifier title="{AppModel>ADDITIONAL_APP_1_STAFF_FULL_NAME}" text="{AppModel>ADDITIONAL_APP_1_STAFF_ID}"/>
+									<ObjectIdentifier title="{AppModel>ADDITIONAL_APP_2_STAFF_FULL_NAME}" text="{AppModel>ADDITIONAL_APP_2_STAFF_ID}"/>
+									<Text text="{AppModel>WBS}"/>
+									<Text text="{AppModel>ATTACHMENT_REQUIRED}"/>
+									<Text text="{AppModel>REMARKS}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</VBox>
+				<VBox
+					visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? true : false}">
+					<table:TreeTable id="TreeTableBasic" busy="true" enableBusyIndicator="true"
+						rows="{path:'AppModel>/claimRequest/createClaimRequest/massUploadRequestPayload', parameters: {arrayNames:['selectedClaimDates']}}"
+						selectionMode="None" ariaLabelledBy="title">
+						<!--<extension>-->
+						<!--	<m:OverflowToolbar style="Clear">-->
+						<!--		<m:Title id="title" text="Clothing"/>-->
+						<!--		<m:ToolbarSpacer/>-->
+						<!--		<m:Button text="Collapse all" press="onCollapseAll"/>-->
+						<!--		<m:Button text="Collapse selection" press="onCollapseSelection"/>-->
+						<!--		<m:Button text="Expand first level" press="onExpandFirstLevel"/>-->
+						<!--		<m:Button text="Expand selection" press="onExpandSelection"/>-->
+						<!--	</m:OverflowToolbar>-->
+						<!--</extension>-->
+						<table:columns>
+							<table:Column width="13rem">
+								<Label design="Bold" text="Errors"/>
+								<table:template>
+									<VBox visible="{=${AppModel>IS_CA} === 'Y' ? true : false}">
+										<Button class="removeBorderButton sapUiNoContentPadding" icon="sap-icon://alert" text="{= ${AppModel>validationResults/}.length }"
+											visible="{= ${AppModel>validationResults/}.length > 0 }" type="Reject" press="onMessagePopoverPress"/>
+									</VBox>
+								</table:template>
+							</table:Column>
+							<table:Column width="9rem">
+								<Label design="Bold" text="Staff ID"/>
+								<table:template>
+									<Text text="{AppModel>STAFF_ID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Date"/>
+								<table:template>
+									<Text text="{AppModel>CLAIM_START_DATE}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Start Time"/>
+								<table:template>
+									<Text text="{AppModel>START_TIME}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="End Time"/>
+								<table:template>
+									<Text text="{AppModel>END_TIME}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Hours"/>
+								<table:template>
+									<Text text="{AppModel>HOURS_UNIT}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Claim Day Type" wrapping="true"/>
+								<table:template>
+									<Text text="{AppModel>CLAIM_DAY_TYPE}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem" visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? false : true}">
+								<Label design="Bold" text="Opt for Compensation" wrapping="true"/>
+								<table:template>
+									<Text text="{AppModel>OPT_FOR_COMPENSATION}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem"
+								visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false}">
+								<Label design="Bold" text="Additional Approver 1" wrapping="true"/>
+								<table:template>
+									<ObjectIdentifier visible="{=${AppModel>IS_CA} === 'Y' ? true : false}" title="{AppModel>ADDTIONAL_APPROVER_1/0/STAFF_FULL_NAME}"
+										text="{AppModel>ADDTIONAL_APPROVER_1/0/STAFF_ID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem"
+								visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false}">
+								<Label design="Bold" text="Additional Approver 2" wrapping="true"/>
+								<table:template>
+									<ObjectIdentifier visible="{=${AppModel>IS_CA} === 'Y' ? true : false}" title="{AppModel>ADDTIONAL_APPROVER_2/0/STAFF_FULL_NAME}"
+										text="{AppModel>ADDTIONAL_APPROVER_2/0/STAFF_ID}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem"
+								visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? false : true}">
+								<Label design="Bold" text="Rate Type" wrapping="true"/>
+								<table:template>
+									<Text text="{AppModel>RATE_TYPE_DESC}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem"
+								visible="{=${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? false : true}">
+								<Label design="Bold" text="Rate Amount" wrapping="true"/>
+								<table:template>
+									<Text text="{AppModel>RATE_TYPE_AMOUNT}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="WBS"/>
+								<table:template>
+									<Text text="{AppModel>WBS}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Attachment Required" wrapping="true"/>
+								<table:template>
+									<Text text="{AppModel>ATTACHMENT_REQUIRED}"/>
+								</table:template>
+							</table:Column>
+							<table:Column width="11rem">
+								<Label design="Bold" text="Remarks"/>
+								<table:template>
+									<VBox >
+										<Text visible="{=${AppModel>IS_CA} === 'Y' ? true : false}" text="{AppModel>REMARKS/0/REMARKS}"/>
+										<Text visible="{=${AppModel>IS_CA} === 'Y' ? false : true}" text="{AppModel>REMARKS}"/>
+									</VBox>
+								</table:template>
+							</table:Column>
+						</table:columns>
+					</table:TreeTable>
+				</VBox>
+			</ScrollContainer>
+		</content>
+		<buttons>
+			<Button text="Submit" press="onSubmitMassUploadAfterValidation"></Button>
+			<Button text="Cancel" press="onCancelMassUploadAfterValidation"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

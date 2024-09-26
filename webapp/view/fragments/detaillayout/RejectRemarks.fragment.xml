@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Dialog showHeader="false" contentWidth="30%">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title text="{i18n>RejectionRemarksDialogTitle}"/>
+				</contentLeft>
+			</Bar>
+		</customHeader>
+		<content>
+			<l:VerticalLayout class="sapUiContentPadding">
+				<l:HorizontalLayout class="sapUiNoContentPadding">
+					<Label design="Bold" text="{i18n>RejectionRemarksLabel}" required="true"/>
+				</l:HorizontalLayout>
+				<l:HorizontalLayout >
+					<TextArea width="290px" required="true" placeholder="Add remarks (mandatory)" value="{AppModel>/rejectionRemarks}"
+						valueState="{AppModel>/rejectionRemarksState}" valueStateText="{AppModel>/rejectionRemarksError}"/>
+				</l:HorizontalLayout>
+			</l:VerticalLayout>
+		</content>
+		<buttons>
+			<Button text="Submit" press="onSubmitRejectReason"></Button>
+			<Button text="Cancel" press="onCancelRejectReason"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.uxap"
+	xmlns:tnt="sap.tnt">
+	<Table class="sapUiResponsiveMargin" id="idLeaveRequestTable" inset="false" growing="true" growingThreshold="20"
+		items="{ path: 'AppModel>/claimRequest/createClaimRequest/leaveData/results', templateShareable:true}">
+		<!--<headerToolbar>-->
+		<!--	<OverflowToolbar>-->
+		<!--		<content>-->
+		<!--			<Title text="Leave Details" level="H3"/>-->
+		<!--<Button icon="sap-icon://refresh" press="getAllUserRequestsNDetails" text="Refresh" type="Transparent" width="8em"/>-->
+		<!--			<ToolbarSpacer/>-->
+		<!--		</content>-->
+		<!--	</OverflowToolbar>-->
+		<!--</headerToolbar>-->
+		<!--<infoToolbar>-->
+		<!--	<Toolbar active=" true">-->
+		<!--		<Label text="Leave Details"/>-->
+		<!--	</Toolbar>-->
+		<!--</infoToolbar>-->
+		<columns>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<Text text="Start Date"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<Text text="End Date"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<Text text="Leave Type"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<Text text="Duration"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+				<Text text="AM / PM"/>
+			</Column>
+			<!--Staff details column visibility will be decided by the formatter defined for property visible, for Claimant it is false			-->
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+				<Text text="Approval Status"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<Text text="{parts: [ {path:'AppModel>startDate'}], formatter: '.formatter.formatDate'}"/>
+					<Text text="{parts: [ {path:'AppModel>endDate'}], formatter: '.formatter.formatDate'}"/>
+					<Text text="{AppModel>timeTypeNav/externalName_defaultValue}"/>
+					<Text text="{AppModel>originalQuantityInDays}"/>
+					<Text text="{AppModel>cust_AmPmForFractionLeave}"/>
+					<Text text="{AppModel>approvalStatus}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

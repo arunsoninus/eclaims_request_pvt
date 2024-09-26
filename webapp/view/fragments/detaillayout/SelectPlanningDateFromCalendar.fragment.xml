@@ -1,0 +1,136 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:d="sap.f" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified" xmlns:form="sap.ui.layout.form">
+	<Dialog titleAlignment="Center" horizontalScrolling="false" draggable="true" contentWidth="80%" contentHeight="auto" showHeader="true"
+		title="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? 'Select Shift Dates' : 'Select Dates'}"
+		afterClose="onCancelSelectDatesForPlanningClaim">
+		<!--title="Select Shift Dates" afterClose="onCancelSelectDatesForPlanningClaim">-->
+		<content>
+			<l:Grid class="sapUiSmallMarginTop" width="100%" hSpacing="1" vSpacing="1" defaultSpan="XL5 L5 M6 S12" defaultIndent="XL0 L0 M0 S0">
+				<l:content>
+					<VBox>
+						<CheckBox text="Select All" enabled="{= ${AppModel>/claimRequest/selectedDates/}.length === 0}" select="onPressSelectAll"/>
+						<!--<Button text="Select All" press="onPressSelectAll"-->
+						<!--	visible="{= ${AppModel>/claimRequest/createClaimRequest/selectAllDates} === true ? false : true }"/>-->
+						<!--<Button text="Unselect All" press="onPressUnselectAll"-->
+						<!--	visible="{= ${AppModel>/claimRequest/createClaimRequest/selectAllDates} === true ? ${AppModel>/claimRequest/createClaimRequest/selectAllDatesApplied} === true ? false : true : false }"/>-->
+						<u:Calendar class="uicalendar" id="dateSelectionCalendarId" select="handleCalendarSelect" showWeekNumbers="false" intervalSelection="false"
+							singleSelection="false" minDate="{path: 'AppModel>/claimRequest/createClaimRequest/minDateMonth'}"
+							maxDate="{path: 'AppModel>/claimRequest/createClaimRequest/maxDateMonth'}" disabledDates="{path: 'AppModel>/claimRequest/selectedDates'}">
+							<u:disabledDates>
+								<u:DateRange startDate="{AppModel>startDate}"/>
+							</u:disabledDates>
+						</u:Calendar>
+						<u:CalendarLegend id="legend1"/>
+						<layoutData>
+							<l:GridData span="XL4 L4 M12 S12"/>
+						</layoutData>
+					</VBox>
+					<VBox>
+						<!--<VBox class="sapUiSmallMarginBottom">
+							<Title text="Claim Data" level="H3"/>
+						</VBox>-->
+						<!--<VBox>
+						<Label text="Previously Used WBS :" design="Bold">
+							<layoutData>
+								<l:GridData span="XL2 L2 M12 S12"/>
+							</layoutData>
+						</Label>
+						<Select width="100%" forceSelection="false" selectedKey="{AppModel>/claimRequest/createClaimRequest/wbs}"
+							placeholder="Select Wbs (optional" change="onChange($event,'validatePreviousWbs')"
+							items="{ path: 'AppModel>/claimRequest/WbsDetail' }">
+							<core:Item key="{AppModel>wbs}" text="{AppModel>WBS}"/>
+							<layoutData>
+								<l:GridData span="XL3 L3 M12 S12"/>
+							</layoutData>
+						</Select>
+						<layoutData>
+							<l:GridData span="XL3 L3 M12 S12"/>
+						</layoutData>
+					</VBox>-->
+						<VBox visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? false : true}">
+							<Label text="WBS :" design="Bold">
+								<layoutData>
+									<l:GridData span="XL2 L2 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Input type="Text" width="100%" placeholder="Enter WBS.." change="onChange($event,'validateWbsFromDialog')"
+								valueState="{AppModel>/errorMessages/valueState/SelectPlanningDateFromCalendar/wbs}"
+								valueStateText="{AppModel>/errorMessages/valueStateText/SelectPlanningDateFromCalendar/wbs}"
+								description="{AppModel>/claimRequest/createClaimRequest/wbsDesc}" value="{AppModel>/claimRequest/createClaimRequest/wbsElementCode}">
+								<layoutData>
+									<l:GridData span="XL12 L12 M12 S12"/>
+								</layoutData>
+							</Input>
+							<layoutData>
+								<l:GridData span="XL12 L12 M12 S12"/>
+							</layoutData>
+						</VBox>
+						<VBox visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? true : false }">
+							<Label text="Rate Type :" design="Bold" required="true">
+								<layoutData>
+									<l:GridData span="XL2 L2 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Select width="100%" forceSelection="false" selectedKey="{AppModel>/claimRequest/createClaimRequest/rateType}"
+								placeholder="Select Rate Type.." change="onChangeOfRateTypeFromCalendar"
+								items="{ path: 'AppModel>/claimRequest/createClaimRequest/RateTypeDetails' }">
+								<core:Item key="{AppModel>RateTypeCode}" text="{AppModel>RateTypeDesc}"/>
+								<layoutData>
+									<l:GridData span="XL3 L3 M12 S12"/>
+								</layoutData>
+							</Select>
+							<layoutData>
+								<l:GridData span="XL3 L3 M12 S12"/>
+							</layoutData>
+						</VBox>
+						<VBox
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/rateType} === '10' || ${AppModel>/claimRequest/createClaimRequest/rateType} === '19' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104'? true : false }">
+							<Label text="Start Time :" design="Bold">
+								<layoutData>
+									<l:GridData span="XL2 L2 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Input id="inputValueHelpCustomIcon1" class="sapUiSmallMarginBottom" type="Text" width="100%" placeholder="Select Start Time in HH:mm format.."
+								showValueHelp="true" valueHelpIconSrc="sap-icon://time-account" value="{AppModel>/claimRequest/createClaimRequest/selectedStartTime}"
+								valueHelpRequest="handleValueHelp1" liveChange="onChangeofStartTime"/>
+						</VBox>
+						<VBox
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/rateType} === '10' || ${AppModel>/claimRequest/createClaimRequest/rateType} === '19' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104'? true : false }">
+							<Label text="End Time :" design="Bold">
+								<layoutData>
+									<l:GridData span="XL2 L2 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Input id="inputValueHelpCustomIcon" class="sapUiSmallMarginBottom" type="Text" width="100%" placeholder="Select End Time in HH:mm.."
+								showValueHelp="true" valueHelpIconSrc="sap-icon://time-account" value="{AppModel>/claimRequest/createClaimRequest/selectedEndTime}"
+								valueHelpRequest="handleValueHelp2" liveChange="onChangeofEndTime"/>
+						</VBox>
+						<VBox
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/rateType} || ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104'? true : false }">
+							<Label text="Hours / Unit :" design="Bold">
+								<layoutData>
+									<l:GridData span="XL2 L2 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Input value="{AppModel>/claimRequest/createClaimRequest/hoursOrUnit}" liveChange="onChangeOfHrsOrUnitFromCalendar"
+								placeholder="{= ${AppModel>/claimRequest/createClaimRequest/rateType} === '10' || ${AppModel>/claimRequest/createClaimRequest/rateType} === '19' ? 'Select Hours..' : 'Select Unit..' }"/>
+						</VBox>
+						<!--<l:VerticalLayout width="100%" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? true : false }">-->
+							<l:VerticalLayout width="100%" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? false : true}">
+							<l:content>
+								<MessageStrip text="{i18n>wbsMessage}" showIcon="true" showCloseButton="false" class="sapUiTinyMarginTop"></MessageStrip>
+							</l:content>
+						</l:VerticalLayout>
+						<layoutData>
+							<l:GridData span="XL4 L6 M12 S12"/>
+						</layoutData>
+					</VBox>
+				</l:content>
+			</l:Grid>
+		</content>
+		<buttons>
+			<Button text="Apply" icon="sap-icon://close-command-field" press="onPressOkNApply" type="Transparent"/>
+			<Button text="Cancel" type="Transparent" press="onCancelSelectDatesForPlanningClaim" visible="true"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

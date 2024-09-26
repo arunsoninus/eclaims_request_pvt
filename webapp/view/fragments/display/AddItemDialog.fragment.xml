@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="previewDialogId" beforeClose="closePreview" class="sapUiSizeCompact" contentWidth="60%">
+		<content>
+			<core:HTML id="previewHtmlId" content="" preferDOM="false"/>
+		</content>
+		<buttons>
+			<Button press="onPressDownloadPvw" icon="sap-icon://download"/>
+			<Button press="closePreview" text="Close" type="Default" width="85px"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

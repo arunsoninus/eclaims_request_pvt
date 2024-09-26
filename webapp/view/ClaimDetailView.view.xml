@@ -1,0 +1,216 @@
+<mvc:View class="sapUiSizeCompact" controllerName="nus.edu.sg.claimrequest.controller.ClaimDetailView" xmlns="sap.uxap"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	xmlns:layout="sap.ui.layout">
+	<m:MessageStrip text="{AppModel>/isClaimLockedMessage}" visible="{= ${AppModel>/isClaimLocked} ? true : false}" showCloseButton="false"
+		type="Error" showIcon="true" class="sapUiMediumMarginBottom"></m:MessageStrip>
+	<ObjectPageLayout id="objPgLyoutDetlScrn" showTitleInHeaderContent="true" alwaysShowContentHeader="false"
+		preserveHeaderStateOnScroll="false" headerContentPinnable="true" isChildPage="true" upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<breadcrumbs>
+					<m:FormattedText class="h4Title"
+						htmlText="&lt;p&gt; {AppModel>/claimRequest/createClaimRequest/claimTypeDesc} Submission for {AppModel>/claimRequest/createClaimRequest/monthName} &lt;strong&gt; ({AppModel>/claimRequest/createClaimRequest/statusDisplay}) &lt;/strong&gt; &lt;/p&gt;"/>
+				</breadcrumbs>
+				<navigationActions>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press="handleFullScreen" id="enterFullScreenBtn"
+						tooltip="Enter Full Screen Mode" visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }"/>
+					<!--<m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press="handleExitFullScreen" id="exitFullScreenBtn"-->
+					<!--	tooltip="Exit Full Screen Mode" visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"/>-->
+					<!--<m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press="handleClose" tooltip="Close column"-->
+					<!--	visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"/>-->
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press="handleExitFullScreen" id="exitFullScreenBtn"
+						tooltip="Exit Full Screen Mode" visible="{AppModel>/exitFullScreen}"/>
+					<m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press="handleClose" tooltip="Close column"
+						visible="{AppModel>/closeColumn}"/>
+				</navigationActions>
+				<actions>
+					<m:Button id="errorMessages" class="removeBorderButton sapUiNoContentPadding" icon="sap-icon://alert" press="onPressErrorMessages"
+						tooltip="Error messages" text="{= ${AppModel>/claimRequest/createClaimRequest/singleRequestErrorMessages/}.length}" type="Reject"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}"
+						visible="{= ${AppModel>/claimRequest/createClaimRequest/singleRequestErrorMessages/}.length > 0 ? true : false}"/>
+					<m:Button id="save" icon="sap-icon://save" press="onPressSaveDraftRequest" text="Save" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showSaveButton} === true ? true : false }"/>
+					<m:Button id="submit" icon="sap-icon://activate" press="onPressSubmit" text="Submit" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showSubmitButton} === true ? true : false }"/>
+					<m:Button id="check" icon="sap-icon://accept" press="onPressCheck" text="Check" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showCheckButton} === true ? true : false }"/>
+					<m:Button id="verify" icon="sap-icon://accept" press="onPressVerify" text="Verify" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showVerifyButton} === true ? true : false }"/>
+					<m:Button id="approve" icon="sap-icon://accept" press="onPressApprove" text="Approve" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showApproveButton} === true ? true : false }"/>
+					<m:Button id="reject" icon="sap-icon://decline" press="onPressReject" text="Reject" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showRejectButton} === true ? true : false }"/>
+					<m:Button id="withdraw" icon="sap-icon://cancel-share" press="onPressWithdraw" text="Withdraw" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showWithdrawButton} === true ? true : false }"/>
+					<m:Button id="retract" icon="sap-icon://cancel-share" press="onPressRetract" text="Retract" type="Transparent"
+						enabled="{= ${AppModel>/isClaimLocked} ? false : true}" visible="{= ${AppModel>/showRetractButton} === true ? true : false }"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+		<headerContent>
+			<m:FlexBox wrap="Wrap" fitContainer="true">
+				<m:Avatar class="sapUiSmallMarginEnd" src="{AppModel>/claimRequest/createClaimRequest/Photo}" displaySize="M"/>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<m:VBox>
+						<m:Text text="{AppModel>/claimRequest/createClaimRequest/FULL_NM} ({AppModel>/claimRequest/createClaimRequest/STF_NUMBER})" wrapping="true"/>
+						<m:Text text="{AppModel>/claimRequest/createClaimRequest/fdluPrimary} ({AppModel>/claimRequest/createClaimRequest/fdluPrimaryCode})"/>
+						<m:Text text="{AppModel>/claimRequest/createClaimRequest/uluPrimary} ({AppModel>/claimRequest/createClaimRequest/uluPrimaryCode})"/>
+					</m:VBox>
+				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+					<m:VBox>
+						<!--<m:Text-->
+						<!--	text="{path: 'AppModel>/claimRequest/createClaimRequest/JoinDate', type: 'sap.ui.model.type.Date', formatOptions: {strictParsing: true , UTC: true, pattern: 'dd.MM.yyyy'}}"></m:Text>-->
+						<m:Text text="Employee Group: {AppModel>/claimRequest/createClaimRequest/EMP_GP_T} ({AppModel>/claimRequest/createClaimRequest/EMP_GP_C})"/>
+						<m:Text text="Date of Joining: {AppModel>/claimRequest/createClaimRequest/JOIN_DATE}"/>
+						<!--<m:Text text="Request Id: {AppModel>/claimRequest/createClaimRequest/requestId}"-->
+						<!--	visible="{= ${AppModel>/claimRequest/createClaimRequest/reqStatus} !== '01' ? true : false }"/>-->
+						<m:FormattedText
+							htmlText="&lt;p&gt;Request Id: &lt;strong&gt; {AppModel>/claimRequest/createClaimRequest/requestId} &lt;/strong&gt; &lt;/p&gt;"
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/reqStatus} !== '01' ? true : false }"/>
+						<!--<m:Text text="{path: 'AppModel>/claimRequest/createClaimRequest/JOIN_DATE'}"/>			-->
+						<!--<m:Text text="Rate Type: {AppModel>/claimRequest/createClaimRequest/rateType}"/>-->
+						<!--<m:Text text="Claim (Month, Year): {AppModel>/claimRequest/createClaimRequest/monthName}"/>-->
+						<!--<m:Text text="Month: {AppModel>/claimRequest/createClaimRequest/CLAIM_MONTH	}"/>-->
+					</m:VBox>
+				</layout:VerticalLayout>
+				<!--<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">-->
+				<!--<m:Text text="Bank Details"/>
+					<m:Avatar class="tickColor" src="sap-icon://accept" displaySize="XS" backgroundColor="Transparent"
+						visible="{ClaimRequest>/isBankDetailsMaintained}"/>
+					<m:Avatar class="crossColor" src="sap-icon://decline" displaySize="XS" backgroundColor="Transparent"
+						visible="{= !${ClaimRequest>/isBankDetailsMaintained}}"/>-->
+				<!--</layout:VerticalLayout>-->
+				<!--<layout:VerticalLayout class="sapUiSmallMarginBeginEnd"/>-->
+				<layout:VerticalLayout>
+					<m:FormattedText visible="false" id="showDraftSavingText"
+						htmlText="&lt;p&gt;&lt;strong&gt;Data is &lt;/strong&gt; &lt;em&gt;saving.... &lt;em&gt; &lt;/p&gt;"/>
+					<!--<m:ObjectStatus text="{ClaimRequest>/requestId} - Claim Submission for {ClaimRequest>/monthName}" state="None"/>-->
+					<!--	<m:Text text="Status"/>-->
+					<!--	<m:ObjectStatus text="{AppModel>/claimRequest/createClaimRequest/statusDisplay}"-->
+					<!--		state="{AppModel>/claimRequest/createClaimRequest/StatusConfigDetails/STATUS_ALIAS}" class="sapMObjectStatusLarge"/>-->
+					<!--<m:Text text="Draft ID: {AppModel>/claimRequest/createClaimRequest/draftId}"/>			-->
+				</layout:VerticalLayout>
+				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd"
+					visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? true : false}">
+					<m:VBox>
+						<m:Text text="{= ${AppModel>/claimRequest/createClaimRequest/rateType} === '18' ? 'Rate Type : Monthly' : 'Rate Type : Hourly'}"/>
+						<m:Text text="Individual Working Hours: {AppModel>/claimRequest/createClaimRequest/WORKING_HOURS}"
+							visible="{= ${AppModel>/claimRequest/createClaimRequest/rateType} === '18' ? true : false}" wrapping="true"/>
+					</m:VBox>
+				</layout:VerticalLayout>
+			</m:FlexBox>
+		</headerContent>
+		<sections>
+			<ObjectPageSection title="ULU FDLU Selection">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.UluFdlu" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Claim Information"
+				visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false }">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.DatesSelectionView" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Leave Details"
+				visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '103' || ${AppModel>/claimRequest/createClaimRequest/claimType} === '104' ? true : false }">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.display.DisplayLeaveRequests" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="CW Claim Details" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? true : false }">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.CwDatesSelectionView" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Verifier" visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '101' ? true : false }">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.Verifier" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Additional Approvers"
+				visible="{= ${AppModel>/claimRequest/createClaimRequest/claimType} === '102' ? false : true }">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="100%">
+								<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.AdditionalApprovers" type="XML"/>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Attachments">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.AttachmentSection" type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Instructions">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.Instructions" type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="Remarks">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<core:Fragment fragmentName="nus.edu.sg.claimrequest.view.fragments.detaillayout.RemarksView" type="XML"/>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection title="WBS">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<layout:VerticalLayout width="31%">
+								<m:List headerText="WBS used in previous submission" items="{ path: 'AppModel>/claimRequest/WbsDetail' }">
+									<m:StandardListItem title="{AppModel>WBS}" description="{AppModel>WBS_DESC}"/>
+								</m:List>
+							</layout:VerticalLayout>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+	</ObjectPageLayout>
+</mvc:View>
